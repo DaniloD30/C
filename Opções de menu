@@ -4,8 +4,8 @@
 void menu(void){
     printf("1 - Imprimir hora do sistema\n");
     printf("2 - Imprimir a data do sistema\n");
-    printf("3 - Somar dois números\n ");
-    printf("4 - Imprima os dois valores digitamos pelo úsario\n");
+    printf("3 - Somar dois nÃºmeros\n ");
+    printf("4 - Imprima os dois valores digitamos pelo Ãºsario\n");
     printf("0 - Encerrar\n");
 }
 int soma(void){
