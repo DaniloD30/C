@@ -1,16 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 int digitos(int numerobase);
+int x;
 
 int q6(int numerobase, int numerobusca){
     int qtdOcorrencias;
     int TAM=0;
     TAM = digitos(numerobase);
     int vetor[TAM];
-    for(int i=0;i<=TAM;i++){
-        vetor[i] = numerobase/TAM;
-
-
+    for(int i=0;i<TAM;i++){
+        vetor[i] = numerobase/x;
+        numerobase = numerobase%x;
+        x = x/10;
     }
      for(int i=0;i<=TAM;i++)
             if(vetor[i]==numerobusca)
@@ -22,10 +23,12 @@ int q6(int numerobase, int numerobusca){
 int digitos(int numerobase){
         int i=1;
         int qtd=0;
-        while(i<numerobase){
+        while(i<=numerobase){
             i*=10;
             qtd++;
         }
+        x=i/10;
+        
         return qtd;
 
 }
@@ -41,5 +44,7 @@ int main()
     printf("Numero de ocorrencias eh de: %d\n",ocorrencia);
     return 0;
 }
+
+
 
 
