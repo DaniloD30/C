@@ -176,7 +176,7 @@ int q6(int numerobase, int numerobusca){
         j=i;
         k=0;
         //printf("Valor de i percorrendo o vetor: %d\n",i);
-        while(j<=TAM){
+        while(j<TAM){
             if(vetorBase[j]==vetorBusca[k]){
                 achou++;
                 //printf("Vetor base %d\n Vetor Busca %d\n",vetorBase[j],vetorBusca[k]);
