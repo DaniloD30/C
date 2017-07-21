@@ -28,6 +28,7 @@
 #include<locale.h>
 int QtdDigitosBase(int numerobase);
 int QtdDigitosBusca(int numerobusca);
+int QtdDigitos(int num);
 int x;
 int y;
 /*
@@ -140,9 +141,34 @@ int q4(char *strTexto, char *strBusca, int posicoes[30]){
  */
 
 int q5(int num){
-
+    int TAM=0, mult=1, n=0;
+    TAM = QtdDigitos(num);
+    int vetor[TAM];
+    mult=x;
+    for(int i=0;i<TAM;i++){  //PREENCHENDO VETOR DA BASE COM CADA DIGITO DO NUMERO DA BASE
+        vetor[i] = num/x;
+        num = num%x;
+        x = x/10;
+    }
+    for(int i=TAM-1;i>=0;i--){
+        n+=vetor[i]*mult;
+        mult=mult/10;
+    }
+    num=n;
     return num;
 }
+int QtdDigitos(int num){
+        int i=1;
+        int qtd=0;
+        while(i<=num){
+            i*=10;
+            qtd++;
+        }
+        x=i/10;
+
+        return qtd;
+}
+
 
 /*
  Q5 = ocorrência de um número em outro
