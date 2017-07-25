@@ -124,11 +124,41 @@ int q3(char *texto, char c, int isCaseSensitive){
         O retorno da função, n, nesse caso seria 1;
  */
 int q4(char *strTexto, char *strBusca, int posicoes[30]){
-    int qtdOcorrencias = -1;
+    int n=0,y=0,inicio=0,igual=0,count=0,qtdOcorrencias = 0,j=0,k=0;
+    n=strlen(strTexto);
+    y=strlen(strBusca);
+    for(int i=0;i<n;i++){
+        j=i;
+        k=0;
+       while(j<n){
+            if(strTexto[j]==strBusca[k]){
+                igual++;
+                //printf("Vetor base %c\n Vetor Busca %c\n",strTexto[j],strBusca[k]);
+                j++;
+            }
+            else
+                break;
 
+
+
+            k++;
+        }
+        if(igual==y){
+            inicio = i+1;
+            posicoes[count] = inicio;
+            count++;
+            posicoes[count] = j; // k = FIM ;
+            count++;
+            qtdOcorrencias++;
+
+        }
+        igual=0;
+    }
     return qtdOcorrencias;
 
 }
+
+
 
 /*
  Q5 = inverte número
