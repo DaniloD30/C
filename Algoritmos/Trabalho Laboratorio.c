@@ -45,26 +45,38 @@ int q1(char *data){
     int datavalida = 1;
     char dia[2],mes[2],ano[4];
     int i,j,k,d=0,a=0,m=0,y=0,v=0;
-
+    
     for(i=0;data[i]!='/';i++){
-        dia[i] = data[i];
+        if(data[i] > 47 && data[i] < 58){
+            dia[i] = data[i];
           //printf("Dia: %c \n",dia[i]);
+        }
+        else
+            return 0;
     }
-    //dia[i] = '\0';
+    dia[i] = '\0';
     for(j = i+1;data[j]!='/';j++){
-        mes[y] = data[j];
+        if((data[j] > 47) && (data[j] < 58)){
+            mes[y] = data[j];
           //printf("Mes: %c \n",mes[y]);
-        y++;
+            y++;
+        }
+        else
+            return 0;
     }
-    //mes[y] = '\0';
+    mes[y] = '\0';
     y=0;
     for(k = j+1;data[k]!='\0';k++){
-        ano[y] = data[k];
-        //printf("y: %d\n",y);
-        //printf("Ano: %c \n",ano[y]);
-        y++;
+        if(data[k] > 47 && data[k] < 58){
+            ano[y] = data[k];
+            //printf("y: %d\n",y);
+            //printf("Ano: %c \n",ano[y]);
+            y++;
+        }
+        else
+            return 0;
     }
-    //ano[y] = '\0';
+    ano[y] = '\0';
 
     if(strlen(ano)!=2 && strlen(ano)!= 4)
         return 0;
@@ -77,22 +89,39 @@ int q1(char *data){
     d = atoi(dia);
     m = atoi(mes);
     a = atoi(ano);
-
-    if((d > 0 && d <= 31) && (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) && a > 0){
-		return 1;
+    
+    if(d<=31 && d>0){
+        if(m==1||m==3||m==5||m==7||m==8||m==10||m==12){
+             datavalida = 1;
+             v = 1;
+        }
     }
-    else if((d > 0 && d <= 30) && (m == 4 || m == 6 || m == 9 || m == 11) && a > 0){
-		return 1;
+    if(d<=30 && d>0){
+        if(m==4||m==6||m==9||m==11){
+            datavalida = 1;
+            v=1;
+        }
     }
-    else if ((d > 0 && d <= 29) && (m == 2) && ((((a % 4) == 0) && ((a % 100) != 0)) || ((a % 400) == 0)) && a > 0){
+    if(d==29 && m==2){
+        if((a%4==0 && a%100!=0 )|| (a%400==0 && a%100!=0)){
+            datavalida = 1;
+            v=1;
+        }
+    }
+    if(d<29 && m==2){
+        datavalida =1;
+        v=1;
+    }
+    if(v==0){
+        datavalida = 0;
+    }
+    
+    if (datavalida)
         return 1;
-    }
-    else if((d>0 && d<=28) && m == 2 && a > 0 ){
-        return 1;
-    }
-    else{
+    else
         return 0;
-    }
+
+
 }
 
 /*
