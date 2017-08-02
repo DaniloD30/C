@@ -65,14 +65,14 @@ int q1(char *data){
         y++;
     }
     //ano[y] = '\0';
-    /*
+
     if(strlen(ano)!=2 && strlen(ano)!= 4)
         return 0;
     if(strlen(dia)!=1 && strlen(dia)!= 2)
         return 0;
     if(strlen(mes)!=1 && strlen(mes)!= 2)
         return 0;
-    */
+
 
     d = atoi(dia);
     m = atoi(mes);
@@ -84,7 +84,7 @@ int q1(char *data){
     else if((d > 0 && d <= 30) && (m == 4 || m == 6 || m == 9 || m == 11) && a > 0){
 		return 1;
     }
-    else if ((d > 0 && d <= 29) && m == 2 && (a % 4 == 0 && (a % 400 == 0 || a % 100 != 0))){
+    else if ((d > 0 && d <= 29) && (m == 2) && ((((a % 4) == 0) && ((a % 100) != 0)) || ((a % 400) == 0)) && a > 0){
         return 1;
     }
     else if((d>0 && d<=28) && m == 2 && a > 0 ){
