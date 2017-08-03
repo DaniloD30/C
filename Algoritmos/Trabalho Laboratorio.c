@@ -43,7 +43,7 @@ int y;
  */
 int q1(char *data){
     int datavalida = 1;
-    char dia[2],mes[2],ano[4];
+    char dia[3],mes[3],ano[5];
     int i,j,k,d=0,a=0,m=0,y=0,v=0;
     
     for(i=0;data[i]!='/';i++){
