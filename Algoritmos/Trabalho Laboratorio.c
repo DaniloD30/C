@@ -137,7 +137,7 @@ int q1(char *data){
     4 -> datainicial > datafinal
  */
 
- int qtdDias(int m,int a){
+ int qtdDi(int m,int a){
     if(m==1||m==3||m==5||m==7||m==8||m==10||m==12)
         return 31;
     if(m==4||m==6||m==9||m==11)
@@ -157,11 +157,12 @@ int q2(char *datainicial, char *datafinal, int *qtdDias, int *qtdMeses, int *qtd
     char diaF[3],mesF[3],anoF[5];
     int i,j,k,y=0;
     int d,m,a,df,mf,af;
+    int validaI,qtdD;
     validaI = q1(datainicial);
     validaFinal = q1(datafinal);
     if(validaI == 0 )
         return 2;
-    if(datafinal == 0)
+    if(validaFinal == 0)
         return 3;
 
     for(i=0;datainicial[i]!='/';i++){
@@ -236,20 +237,18 @@ int q2(char *datainicial, char *datafinal, int *qtdDias, int *qtdMeses, int *qtd
     mf = atoi(mesF);
     af = atoi(anoF);
 
-    if((df < d) && (mf <= m)&& (af <= a))
+    if((df < d) && (mf <= m) && (af <= a))
         return 4;
     if((df <= d) && (mf<m) && (af <= a))
         return 4;
     if((df<= d) && (mf<=m) && (af < a))
         return 4;
-    
+
    if(df < d){
-        qtdAnos = af - a;
-        qtdMeses = (mf - mi) - 1;
+        *qtdAnos = af - a;
+        *qtdMeses = (mf - m) - 1;
         qtdD = qtdDi(mf-1,a);
-        qtdDias = (qtdD - d) + df;
-
-
+        *qtdDias = (qtdD - d) + df;
     }
 
 
@@ -267,6 +266,7 @@ int q2(char *datainicial, char *datafinal, int *qtdDias, int *qtdMeses, int *qtd
     return 1;
 
 }
+
 
 
 /*
