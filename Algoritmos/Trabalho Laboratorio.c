@@ -242,7 +242,15 @@ int q2(char *datainicial, char *datafinal, int *qtdDias, int *qtdMeses, int *qtd
         return 4;
     if((df<= d) && (mf<=m) && (af < a))
         return 4;
+    
+   if(df < d){
+        qtdAnos = af - a;
+        qtdMeses = (mf - mi) - 1;
+        qtdD = qtdDi(mf-1,a);
+        qtdDias = (qtdD - d) + df;
 
+
+    }
 
 
 
