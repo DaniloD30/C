@@ -284,15 +284,25 @@ int q3(char *texto, char c, int isCaseSensitive){
     int tam;
     int count=0;
     int i;
+    char maiuscula,minuscula;
     tam =strlen(texto);
+    if(c > 64 && c < 91 ){
+        maiuscula = c;
+        minuscula = c + 32;
+    }
+    else{
+        maiuscula = c - 32;
+        minuscula = c;
+    }
+
     if(isCaseSensitive==1){
     for( i=0;i<=tam;i++)
-        if(texto[i]== c) //SOMENTE VAI CONTAR AS LETRAS MINUSCULAS;
+        if(texto[i]== c) //SOMENTE VAI CONTAR UM TIPO DE LETRA
             count++;
     }
     else{
         for( i=0;i<=tam;i++)
-            if(texto[i]==tolower(c)||texto[i]== toupper(c)) //VAI CONTAS AS LETRAS MINUSCULAS E MAIUSCULAS;
+            if(texto[i]==maiuscula||texto[i]== minuscula) //VAI CONTAR AS LETRAS MINUSCULAS E MAIUSCULAS;
                 count++;
     }
     return count;
