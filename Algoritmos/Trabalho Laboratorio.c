@@ -45,7 +45,7 @@ int q1(char *data){
     int datavalida = 1;
     char dia[3],mes[3],ano[5];
     int i,j,k,d=0,a=0,m=0,y=0,v=0;
-    
+
     for(i=0;data[i]!='/';i++){
         if(data[i] > 47 && data[i] < 58){
             dia[i] = data[i];
@@ -89,7 +89,7 @@ int q1(char *data){
     d = atoi(dia);
     m = atoi(mes);
     a = atoi(ano);
-    
+
     if(d<=31 && d>0){
         if(m==1||m==3||m==5||m==7||m==8||m==10||m==12){
              datavalida = 1;
@@ -115,7 +115,7 @@ int q1(char *data){
     if(v==0){
         datavalida = 0;
     }
-    
+
     if (datavalida)
         return 1;
     else
@@ -134,12 +134,124 @@ int q1(char *data){
     1 -> cálculo de diferença realizado com sucesso
     2 -> datainicial inválida
     3 -> datafinal inválida
-    4 -> datainicial < datafinal
+    4 -> datainicial > datafinal
  */
+
+ int qtdDias(int m,int a){
+    if(m==1||m==3||m==5||m==7||m==8||m==10||m==12)
+        return 31;
+    if(m==4||m==6||m==9||m==11)
+        return 30;
+     if((a%4==0 && a%100!=0 )|| (a%400==0 && a%100!=0))
+        return 29;
+     else
+        return 28;
+
+}
 int q2(char *datainicial, char *datafinal, int *qtdDias, int *qtdMeses, int *qtdAnos){
     *qtdDias = 10;
     *qtdAnos = 20;
     *qtdMeses = 30;
+    int valida=0,validaFinal=0;
+    char diaI[3],mesI[3],anoI[5];
+    char diaF[3],mesF[3],anoF[5];
+    int i,j,k,y=0;
+    int d,m,a,df,mf,af;
+    validaI = q1(datainicial);
+    validaFinal = q1(datafinal);
+    if(validaI == 0 )
+        return 2;
+    if(datafinal == 0)
+        return 3;
+
+    for(i=0;datainicial[i]!='/';i++){
+        if(datainicial[i] > 47 && datainicial[i] < 58){
+            diaI[i] = datainicial[i];
+          //printf("Dia: %c \n",dia[i]);
+        }
+        else
+            return 0;
+    }
+    diaI[i] = '\0';
+    for(j = i+1;datainicial[j]!='/';j++){
+        if((datainicial[j] > 47) && (datainicial[j] < 58)){
+            mesI[y] = datainicial[j];
+          //printf("Mes: %c \n",mes[y]);
+            y++;
+        }
+        else
+            return 0;
+    }
+    mesI[y] = '\0';
+    y=0;
+    for(k = j+1;datainicial[k]!='\0';k++){
+        if(datainicial[k] > 47 && datainicial[k] < 58){
+            anoI[y] = datainicial[k];
+            //printf("y: %d\n",y);
+            //printf("Ano: %c \n",ano[y]);
+            y++;
+        }
+        else
+            return 0;
+    }
+    anoI[y] = '\0';
+
+    for(i=0;datafinal[i]!='/';i++){
+        if(datafinal[i] > 47 && datafinal[i] < 58){
+            diaF[i] = datafinal[i];
+          //printf("Dia: %c \n",dia[i]);
+        }
+        else
+            return 0;
+    }
+    diaF[i] = '\0';
+    y=0;
+    for(j = i+1;datafinal[j]!='/';j++){
+        if((datafinal[j] > 47) && (datafinal[j] < 58)){
+            mesF[y] = datafinal[j];
+          //printf("Mes: %c \n",mes[y]);
+            y++;
+        }
+        else
+            return 0;
+    }
+    mesF[y] = '\0';
+    y=0;
+    for(k = j+1;datafinal[k]!='\0';k++){
+        if(datafinal[k] > 47 && datafinal[k] < 58){
+            anoF[y] = datafinal[k];
+            //printf("y: %d\n",y);
+            //printf("Ano: %c \n",ano[y]);
+            y++;
+        }
+        else
+            return 0;
+    }
+    anoF[y] = '\0';
+
+    d = atoi(diaI);
+    m = atoi(mesI);
+    a = atoi(anoI);
+    df = atoi(diaF);
+    mf = atoi(mesF);
+    af = atoi(anoF);
+
+    if((df < d) && (mf <= m)&& (af <= a))
+        return 4;
+    if((df <= d) && (mf<m) && (af <= a))
+        return 4;
+    if((df<= d) && (mf<=m) && (af < a))
+        return 4;
+
+
+
+
+
+
+
+
+
+
 
     //printf("%s\n", datainicial);
     //printf("%s\n", datafinal);
@@ -163,14 +275,15 @@ int q2(char *datainicial, char *datafinal, int *qtdDias, int *qtdMeses, int *qtd
 int q3(char *texto, char c, int isCaseSensitive){
     int tam;
     int count=0;
+    int i;
     tam =strlen(texto);
     if(isCaseSensitive==1){
-    for(int i=0;i<=tam;i++)
+    for( i=0;i<=tam;i++)
         if(texto[i]== c) //SOMENTE VAI CONTAR AS LETRAS MINUSCULAS;
             count++;
     }
     else{
-        for(int i=0;i<=tam;i++)
+        for( i=0;i<=tam;i++)
             if(texto[i]==tolower(c)||texto[i]== toupper(c)) //VAI CONTAS AS LETRAS MINUSCULAS E MAIUSCULAS;
                 count++;
     }
@@ -194,10 +307,10 @@ int q3(char *texto, char c, int isCaseSensitive){
         O retorno da função, n, nesse caso seria 1;
  */
 int q4(char *strTexto, char *strBusca, int posicoes[30]){
-    int n=0,y=0,inicio=0,igual=0,count=0,qtdOcorrencias = 0,j=0,k=0;
+    int n=0,y=0,inicio=0,igual=0,count=0,qtdOcorrencias = 0,j=0,k=0,i;
     n=strlen(strTexto);
     y=strlen(strBusca);
-    for(int i=0;i<n;i++){
+    for( i=0;i<n;i++){
         j=i;
         k=0;
        while(j<n){
@@ -241,16 +354,16 @@ int q4(char *strTexto, char *strBusca, int posicoes[30]){
  */
 
 int q5(int num){
-    int TAM=0, mult=1, n=0;
+    int TAM=0, mult=1, n=0,i;
     TAM = QtdDigitos(num);
     int vetor[TAM];
     mult=x;
-    for(int i=0;i<TAM;i++){  //PREENCHENDO VETOR DA BASE COM CADA DIGITO DO NUMERO DA BASE
+    for( i=0;i<TAM;i++){  //PREENCHENDO VETOR DA BASE COM CADA DIGITO DO NUMERO DA BASE
         vetor[i] = num/x;
         num = num%x;
         x = x/10;
     }
-    for(int i=TAM-1;i>=0;i--){
+    for( i=TAM-1;i>=0;i--){
         n+=vetor[i]*mult;
         mult=mult/10;
     }
@@ -282,23 +395,23 @@ int QtdDigitos(int num){
 
 int q6(int numerobase, int numerobusca){
     int qtdOcorrencias=0,TAM=0,TamBusca=0,achou=0;
-    int j,k;
+    int j,k,i;
     TAM = QtdDigitosBase(numerobase);
     TamBusca = QtdDigitosBusca(numerobusca);
     int vetorBase[TAM];
     int vetorBusca[TamBusca];
-    for(int i=0;i<TAM;i++){  //PREENCHENDO VETOR DA BASE COM CADA DIGITO DO NUMERO DA BASE
+    for( i=0;i<TAM;i++){  //PREENCHENDO VETOR DA BASE COM CADA DIGITO DO NUMERO DA BASE
         vetorBase[i] = numerobase/x;
         numerobase = numerobase%x;
         x = x/10;
     }
-    for(int i=0;i<TamBusca;i++){  //PREENCHENDO VETOR DA BUSCA COM CADA DIGITO DO NUMERO DA BUSCA
+    for( i=0;i<TamBusca;i++){  //PREENCHENDO VETOR DA BUSCA COM CADA DIGITO DO NUMERO DA BUSCA
         vetorBusca[i] = numerobusca/y;
         numerobusca = numerobusca%y;
         y = y/10;
     }
     //printf("Tamanho vetor base: %d\n Tamanho vetor busca: %d\n",TAM,TamBusca);
-    for(int i=0;i<TAM;i++){
+    for(i=0;i<TAM;i++){
         j=i;
         k=0;
         //printf("Valor de i percorrendo o vetor: %d\n",i);
