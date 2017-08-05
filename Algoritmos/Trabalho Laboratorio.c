@@ -142,11 +142,12 @@ int q1(char *data){
         return 31;
     if(m==4||m==6||m==9||m==11)
         return 30;
+  if(m == 2){   
      if((a%4==0 && a%100!=0 )|| (a%400==0 && a%100!=0))
         return 29;
      else
         return 28;
-
+  }
 }
 int q2(char *datainicial, char *datafinal, int *qtdDias, int *qtdMeses, int *qtdAnos){
     *qtdDias = 10;
