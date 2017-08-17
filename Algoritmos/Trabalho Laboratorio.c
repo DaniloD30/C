@@ -12,7 +12,7 @@
 
 //  ----- Dados do Aluno -----
 //  Nome: Danilo Oliveira Dias
-//  email:
+//  email: danilolive30@hotmail.com
 //  Matrícula: 2016116013
 //  Semestre: Terceiro
 
@@ -24,247 +24,379 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include<string.h>
-#include <ctype.h>
-#include<locale.h>
+#include <wchar.h>
+#include <locale.h>
 int QtdDigitosBase(int numerobase);
 int QtdDigitosBusca(int numerobusca);
 int QtdDigitos(int num);
 int x;
 int y;
-/*
- Q1 = validar data
-@objetivo
-    Validar uma data
-@entrada
-    uma string data. Formatos que devem ser aceitos: dd/mm/aaaa, onde dd = dia, mm = mês, e aaaa, igual ao ano. dd em mm podem ter apenas um digito, e aaaa podem ter apenas dois digitos.
-@saida
-    0 -> se data inválida
-    1 -> se data válida
- */
+
+
+int pegaAno(char *data){
+
+	int multi = 1, ano = 0, cont = 0,x;
+
+	//Obtendo o ano
+
+	for( x = strlen(data) - 1;x >= 0;x--){
+		int ascii, dec = 0;
+
+		for(ascii=48;ascii<58;ascii++){
+
+			if(data[x] == 47){
+
+				x = -1;
+
+				break;
+
+			}
+
+			if(data[x] == ascii){
+
+				ano = ano + (dec * multi);
+				multi = multi * 10;
+
+				break;
+
+			}
+
+			dec++;
+
+		}
+
+		cont++;
+
+	}
+
+	if(cont > 5 || cont == 4){
+		return -1;
+
+	} else{
+
+		if(cont == 3){
+
+			ano = ano + 2000;
+
+		}
+
+		return ano;
+
+	}
+
+}
+
+
+
+int pegaMes(char *data){
+
+	int multi = 1, mes = 0, cont = 0, cont2 = 0,x;
+
+	for( x = strlen(data) - 1; x >= 0; x--){
+
+		if(data[x] != 47){
+
+			cont++;
+
+		} else{
+
+			cont++;
+
+			break;
+
+		}
+
+	}
+
+	for( x = strlen(data) - 1 - cont;x >= 0;x--){
+
+		int ascii, dec = 0;
+
+
+
+		for(ascii=48;ascii<58;ascii++){
+
+			if(data[x] == 47){
+
+				x = -1;
+
+				break;
+
+			}
+
+			if(data[x] == ascii){
+
+				mes = mes + (dec * multi);
+
+				multi = multi * 10;
+
+				break;
+
+			}
+
+			dec++;
+
+		}
+
+		cont2++;
+
+	}
+
+	if(cont2 <= 3){
+
+		return mes;
+
+	} else{
+
+		return -1;
+
+	}
+
+}
+
+
+
+int pegaDia(char *data){
+
+	int multi = 1, dia = 0, cont = 0, barra_encontrada = 0, cont2 = 0,x;
+
+	for( x = strlen(data) - 1; x >= 0; x--){
+		if(data[x] != 47 || (data[x] == 47 && barra_encontrada < 2)){
+
+			cont++;
+
+		}
+
+		if(data[x] == 47){
+
+			barra_encontrada++;
+
+		}
+
+		if(barra_encontrada > 1){
+
+			break;
+
+		}
+
+	}
+
+	for(x = strlen(data) - 1 - cont;x >= 0;x--){
+		int ascii, dec = 0;
+
+		for(ascii=48;ascii<58;ascii++){
+
+			if(data[x] == ascii){
+
+				dia = dia + (dec * multi);
+
+				multi = multi * 10;
+
+				break;
+
+			}
+
+			dec++;
+
+		}
+
+		cont2++;
+
+	}
+
+	if(cont2 <= 2){
+
+		return dia;
+
+	} else{
+
+		return -1;
+
+	}
+
+}
+
+
+
+int val_ano_bi(int ano){
+
+	if(ano % 4 == 0){
+		return 1;
+
+	} else{
+
+		return 0;
+
+	}
+
+}
+
+
+
 int q1(char *data){
-    int datavalida = 1;
-    char dia[3],mes[3],ano[5];
-    int i,j,k,d=0,a=0,m=0,y=0,v=0;
 
-    for(i=0;data[i]!='/';i++){
-        if(data[i] > 47 && data[i] < 58){
-            dia[i] = data[i];
-          //printf("Dia: %c \n",dia[i]);
-        }
-        else
-            return 0;
-    }
-    dia[i] = '\0';
-    for(j = i+1;data[j]!='/';j++){
-        if((data[j] > 47) && (data[j] < 58)){
-            mes[y] = data[j];
-          //printf("Mes: %c \n",mes[y]);
-            y++;
-        }
-        else
-            return 0;
-    }
-    mes[y] = '\0';
-    y=0;
-    for(k = j+1;data[k]!='\0';k++){
-        if(data[k] > 47 && data[k] < 58){
-            ano[y] = data[k];
-            //printf("y: %d\n",y);
-            //printf("Ano: %c \n",ano[y]);
-            y++;
-        }
-        else
-            return 0;
-    }
-    ano[y] = '\0';
-
-    if(strlen(ano)!=2 && strlen(ano)!= 4)
-        return 0;
-    if(strlen(dia)!=1 && strlen(dia)!= 2)
-        return 0;
-    if(strlen(mes)!=1 && strlen(mes)!= 2)
-        return 0;
+	int multi = 1, ano = 0, mes = 0, dia = 0, pos_verificada = 0;
 
 
-    d = atoi(dia);
-    m = atoi(mes);
-    a = atoi(ano);
 
-    if(d<=31 && d>0){
-        if(m==1||m==3||m==5||m==7||m==8||m==10||m==12){
-             datavalida = 1;
-             v = 1;
-        }
-    }
-    if(d<=30 && d>0){
-        if(m==4||m==6||m==9||m==11){
-            datavalida = 1;
-            v=1;
-        }
-    }
-    if(d==29 && m==2){
-        if((a%4==0 && a%100!=0 )|| (a%400==0 && a%100!=0)){
-            datavalida = 1;
-            v=1;
-        }
-    }
-    if(d<29 && m==2){
-        datavalida =1;
-        v=1;
-    }
-    if(v==0){
-        datavalida = 0;
-    }
+	ano = pegaAno(data);
 
-    if (datavalida)
-        return 1;
-    else
-        return 0;
+	mes = pegaMes(data);
 
+	dia = pegaDia(data);
+
+
+	if((dia > 0 && dia <= 31) && (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) && ano > 0){
+
+		return 1;
+
+	} else if((dia > 0 && dia <= 30) && (mes == 4 || mes == 6 || mes == 9 || mes == 11) && ano > 0){
+
+		return 1;
+
+	} else if((dia > 0 && dia <= 28) && mes == 2 && !val_ano_bi(ano) && ano > 0){
+
+		return 1;
+
+	} else if((dia > 0 && dia <= 29) && mes == 2 && val_ano_bi(ano) && ano > 0){
+
+		return 1;
+
+	} else{
+
+		return 0;
+
+	}
 
 }
 
-/*
- Q2 = diferença entre duas datas
- @objetivo
-    Calcular a diferença em anos, meses e dias entre duas datas
- @entrada
-    uma string datainicial, uma string datafinal. Além disso, a função tem três parâmetros qtdDias, qtdMeses e qtdAnos. Esses três parâmetros devem ser utilizados para guardar os resultados dos cálculos. Na chamada da função deve passar o valor -1 para os três
- @saida
-    1 -> cálculo de diferença realizado com sucesso
-    2 -> datainicial inválida
-    3 -> datafinal inválida
-    4 -> datainicial > datafinal
- */
 
- int qtdDi(int m,int a){
-    if(m==1||m==3||m==5||m==7||m==8||m==10||m==12)
-        return 31;
-    if(m==4||m==6||m==9||m==11)
-        return 30;
-  if(m == 2){   
-     if((a%4==0 && a%100!=0 )|| (a%400==0 && a%100!=0))
-        return 29;
-     else
-        return 28;
-  }
-}
+
 int q2(char *datainicial, char *datafinal, int *qtdDias, int *qtdMeses, int *qtdAnos){
-    *qtdDias = 10;
-    *qtdAnos = 20;
-    *qtdMeses = 30;
-    int valida=0,validaFinal=0;
-    char diaI[3],mesI[3],anoI[5];
-    char diaF[3],mesF[3],anoF[5];
-    int i,j,k,y=0;
-    int d,m,a,df,mf,af;
-    int validaI,qtdD;
-    validaI = q1(datainicial);
-    validaFinal = q1(datafinal);
+
+    *qtdDias = 0;
+
+    *qtdMeses = 0;
+
+    *qtdAnos = 0;
+
+	int validaI = q1(datainicial), validaFinal = q1(datafinal), anoI, mesI, diaI, anoF, mesF, diaF;
+
     if(validaI == 0 )
         return 2;
     if(validaFinal == 0)
         return 3;
 
-    for(i=0;datainicial[i]!='/';i++){
-        if(datainicial[i] > 47 && datainicial[i] < 58){
-            diaI[i] = datainicial[i];
-          //printf("Dia: %c \n",dia[i]);
-        }
-        else
-            return 0;
-    }
-    diaI[i] = '\0';
-    for(j = i+1;datainicial[j]!='/';j++){
-        if((datainicial[j] > 47) && (datainicial[j] < 58)){
-            mesI[y] = datainicial[j];
-          //printf("Mes: %c \n",mes[y]);
-            y++;
-        }
-        else
-            return 0;
-    }
-    mesI[y] = '\0';
-    y=0;
-    for(k = j+1;datainicial[k]!='\0';k++){
-        if(datainicial[k] > 47 && datainicial[k] < 58){
-            anoI[y] = datainicial[k];
-            //printf("y: %d\n",y);
-            //printf("Ano: %c \n",ano[y]);
-            y++;
-        }
-        else
-            return 0;
-    }
-    anoI[y] = '\0';
+    if(validaI == 1 && validaFinal == 1){
 
-    for(i=0;datafinal[i]!='/';i++){
-        if(datafinal[i] > 47 && datafinal[i] < 58){
-            diaF[i] = datafinal[i];
-          //printf("Dia: %c \n",dia[i]);
-        }
-        else
-            return 0;
-    }
-    diaF[i] = '\0';
-    y=0;
-    for(j = i+1;datafinal[j]!='/';j++){
-        if((datafinal[j] > 47) && (datafinal[j] < 58)){
-            mesF[y] = datafinal[j];
-          //printf("Mes: %c \n",mes[y]);
-            y++;
-        }
-        else
-            return 0;
-    }
-    mesF[y] = '\0';
-    y=0;
-    for(k = j+1;datafinal[k]!='\0';k++){
-        if(datafinal[k] > 47 && datafinal[k] < 58){
-            anoF[y] = datafinal[k];
-            //printf("y: %d\n",y);
-            //printf("Ano: %c \n",ano[y]);
-            y++;
-        }
-        else
-            return 0;
-    }
-    anoF[y] = '\0';
+    	anoI = pegaAno(datainicial);
 
-    d = atoi(diaI);
-    m = atoi(mesI);
-    a = atoi(anoI);
-    df = atoi(diaF);
-    mf = atoi(mesF);
-    af = atoi(anoF);
+		mesI = pegaMes(datainicial);
 
-    if((df < d) && (mf <= m) && (af <= a))
+		diaI = pegaDia(datainicial);
+
+		anoF = pegaAno(datafinal);
+
+		mesF = pegaMes(datafinal);
+
+		diaF = pegaDia(datafinal);
+
+		*qtdAnos = anoF - anoI;
+
+		*qtdMeses = mesF - mesI;
+
+		*qtdDias = diaF - diaI;
+
+    if((diaF < diaI) && (mesF <= mesI) && (anoF <= anoI))
         return 4;
-    if((df <= d) && (mf<m) && (af <= a))
+    if((diaF <= diaI) && (mesF<mesI) && (anoF <= anoI))
         return 4;
-    if((df<= d) && (mf<=m) && (af < a))
+    if((diaF<= diaI) && (mesF<=mesI) && (anoF < anoI))
         return 4;
 
-   if(df < d){
-        *qtdAnos = af - a;
-        *qtdMeses = (mf - m) - 1;
-        qtdD = qtdDi(mf-1,a);
-        *qtdDias = (qtdD - d) + df;
-    }
+		if(anoF - anoI >= 0 && mesF - mesI < 0){
 
+			*qtdAnos = *qtdAnos - 1;
 
+			*qtdMeses = 12 - (mesI - mesF);
 
+		}
 
+		if(diaF - diaI < 0){
 
+			if(*qtdMeses == 0){
 
+				if(diaF == 28 && diaI == 29 && mesF == 2 && mesI == 2 && val_ano_bi(anoI) && !val_ano_bi(anoF)){
 
+					*qtdDias = 0;
 
+					*qtdMeses = 0;
 
+				} else{
 
-    //printf("%s\n", datainicial);
-    //printf("%s\n", datafinal);
+					*qtdAnos = *qtdAnos - 1;
 
-    return 1;
+					*qtdMeses = 11;
+
+					*qtdDias = diaF;
+
+				}
+
+			}else{
+
+				*qtdMeses = *qtdMeses - 1;
+
+				if(mesI == 1 || mesI == 3 || mesI == 5 || mesI == 7 || mesI == 8 || mesI == 10 || mesI == 12){
+
+					*qtdDias = (31 - diaI) + diaF;
+
+				} else if(mesI == 4 || mesI == 6 || mesI == 9 || mesI == 11){
+
+					*qtdDias = (30 - diaI) + diaF;
+
+				} else if(mesI == 2 && !val_ano_bi(anoI)){
+					if(!val_ano_bi(anoF)){
+
+						*qtdDias = (28 - diaI) + diaF;
+
+					} else {
+
+						*qtdDias = (28 - diaI) + diaF + 1;
+
+					}
+
+				} else if(mesI == 2 && val_ano_bi(anoI)){
+					if(mesF == 2){
+
+						if(val_ano_bi(anoF)){
+
+							*qtdDias = 29 - diaI + diaF;
+
+						}else{
+
+							*qtdDias = 28 - diaI + diaF;
+
+						}
+
+					} else{
+
+						*qtdDias = (29 - diaI) + diaF;
+
+					}
+
+				}
+
+			}
+
+    	}
+
+    	return 1;
+
+	} else {
+
+    	return 0;
+
+   	}
 
 }
 
@@ -325,15 +457,46 @@ int q3(char *texto, char c, int isCaseSensitive){
         Observe que o índice da posição no texto deve começar ser contado a partir de 1.
         O retorno da função, n, nesse caso seria 1;
  */
+ void parseToWchar(wchar_t* new, const char* string, const int len){
+    // Gambiarra do setlocale pq sem essa zorra o código não pega
+    setlocale(LC_ALL, "");
+    // Só sei que depois do setlocale e dessa função funciona
+    mbstowcs(new, string, len);
+}
+
+void clearWString(wchar_t* str, const int len){
+    // é necessário limpar a string de wchar_t, essa zorra inicia com lixo
+    int i;
+    for( i = 0; i<len; i++)
+        str[i] = '\0';
+}
+
+int size(const wchar_t* str){
+    // código na big hand para recuperar o size da string de wchar_t
+    int cont = 0,i;
+    for( i = 0; str[i]; i++)
+        cont++;
+    return cont;
+}
 int q4(char *strTexto, char *strBusca, int posicoes[30]){
     int n=0,y=0,inicio=0,igual=0,count=0,qtdOcorrencias = 0,j=0,k=0,i;
+     wchar_t word[250];
+    wchar_t search[250];
+
+    clearWString(word, 250);
+    clearWString(search, 250);
+
+    parseToWchar(word, strTexto, strlen(strTexto));
+    parseToWchar(search, strBusca, strlen(strBusca));
+
     n=strlen(strTexto);
     y=strlen(strBusca);
+
     for( i=0;i<n;i++){
         j=i;
         k=0;
        while(j<n){
-            if(strTexto[j]==strBusca[k]){
+            if(word[j]==search[k]){
                 igual++;
                 //printf("Vetor base %c\n Vetor Busca %c\n",strTexto[j],strBusca[k]);
                 j++;
