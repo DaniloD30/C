@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void tabuleiro(int tab[][3], int jogador[][3]){
     int x,y;
@@ -41,20 +42,20 @@ void tabuleiro(int tab[][3], int jogador[][3]){
 
 void escolherPos(int player, int jogador[][3], int tab[][3]){
 	int celula_valida = 0, erro = 0,x,y;
-	char celula[2];
+	char celula[3];
 	while(!celula_valida){
 		if(erro){
-			system("cls");
+			system("clear");
 			tabuleiro(tab, jogador);
 			printf("\n\nCelula ja selecionada ou invalida! Player %d, informe uma outra celula: ", player);
 			fflush(stdin);
-			gets(celula);
+			fgets(celula, 3, stdin);
 		} else{
-			system("cls");
+			system("clear");
 			tabuleiro(tab, jogador);
 			printf("\n\nPlayer %d, informe a celula desejada: ", player);
 			fflush(stdin);
-			gets(celula);
+			fgets(celula, 3, stdin);
 		}
 		erro = 0;
 		for(x = 0; x < 3 && !celula_valida && !erro; x++){
@@ -156,11 +157,7 @@ int verifica_vencedor(int jogador[][3]){
 int main(){
 	int tab[3][3], jogador[3][3], jogadas = 0, player = 1, vencedor = 0;
 	tabuleiro(tab, jogador);
-	#ifdef WIN32
-		system("CLS");
-	#else
-		system("clear");
-	#endif<br />
+
 	while(jogadas != 9 || !vencedor){
 		if(player == 1){
 			escolherPos(player, jogador, tab);
@@ -169,13 +166,13 @@ int main(){
 			player = 2;
 		}
 		if(vencedor == 1){
-			system("cls");
+			system("clear");
 			tabuleiro(tab, jogador);
 			printf("\n\nO Player 1 venceu!");
 			break;
 		}
 		if(jogadas == 9){
-			system("cls");
+			system("clear");
 			tabuleiro(tab, jogador);
 			printf("\n\nNao houve vencedor!");
 			break;
@@ -187,13 +184,13 @@ int main(){
 			player = 1;
 		}
 		if(vencedor == 2){
-			system("cls");
+			system("clear");
 			tabuleiro(tab, jogador);
 			printf("\n\nO Player 2 venceu!");
 			break;
 		}
 		if(jogadas == 9){
-			system("cls");
+			system("clear");
 			tabuleiro(tab, jogador);
 			printf("\n\nNao houve vencedor!");
 			break;
