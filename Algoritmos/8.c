@@ -7,7 +7,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
+#include <curses.h>
+#include <string.h>
 #define TOTAL_BARCOS 5
 
 void preencheTab(int jogador[][10][10]){
@@ -68,7 +69,7 @@ void tabuleiro(int jogador[][10][10], int player, int tipo_tab){
 }
 
 void posicoesBarcos(int jogador[][10][10], int player){
-	char posicao[2];
+	char posicao[3];
 	int erro = 0,k,j,z;
 	for(player = 0; player <= 1; player++){
 		int barcos = 0, ok = 0, tamanhoBarco = 4, escolha = 0, opcao = 0;
@@ -81,17 +82,17 @@ void posicoesBarcos(int jogador[][10][10], int player){
 				fflush(stdin);
 				if(erro){
 					erro = 0;
-					system("cls");
+					system("clear");
 					tabuleiro(jogador, player,1);
 					printf("\nPosicao invalida! Por favor, informe uma posicao valida: ");
 					fflush(stdin);
-					gets(posicao);
+					fgets(posicao, 3, stdin);
 				}else{
-					system("cls");
+					system("clear");
 					tabuleiro(jogador, player,1);
 					printf("\nPlayer %d, informe a posicao inicial do seu barco de tamanho %d: ",player + 1, tamanhoBarco);
 					fflush(stdin);
-					gets(posicao);
+					fgets(posicao, 3, stdin);
 				}
 				ok = 0;
 				opcao = 0;
@@ -385,25 +386,25 @@ void posicoesBarcos(int jogador[][10][10], int player){
 }
 
 void atirar(int jogador[][10][10], int player){
-	char posicao[2];
+	char posicao[3];
 	int ok = 0, erro = 0,j,k;
 	while(!ok){
 		fflush(stdin);
 		if(erro){
 			erro = 0;
-			system("cls");
+			system("clear");
 			tabuleiro(jogador, player, 1);
 			tabuleiro(jogador, player, 2);
 			printf("\nPosicao invalida! Por favor, informe uma posicao valida: ");
 			fflush(stdin);
-			gets(posicao);
+			fgets(posicao, 3, stdin);
 		}else{
-			system("cls");
+			system("clear");
 			tabuleiro(jogador, player, 1);
 			tabuleiro(jogador, player, 2);
 			printf("\nPlayer %d, informe a posicao em que deseja atirar: ",player+1);
 			fflush(stdin);
-			gets(posicao);
+			fgets(posicao, 3, stdin);
 		}
 		for( j = 0; j < 10 && !erro && !ok; j++){
 
@@ -412,7 +413,7 @@ void atirar(int jogador[][10][10], int player){
 					if(player == 0){
 						if(jogador[1][j][k] == 1){
 							jogador[1][j][k] = 2;
-							system("cls");
+							system("clear");
 							tabuleiro(jogador, player, 1);
 							tabuleiro(jogador, player, 2);
 							printf("\n\nVoce acertou! Pressione qualquer tecla para continuar!");
@@ -421,7 +422,7 @@ void atirar(int jogador[][10][10], int player){
 							break;
 						} else if(jogador[1][j][k] != 2 && jogador[1][j][k] != 3){
 							jogador[1][j][k] = 3;
-							system("cls");
+							system("clear");
 							tabuleiro(jogador, player, 1);
 							tabuleiro(jogador, player, 2);
 							printf("\n\nVoce errou! Pressione qualquer tecla para continuar!");
@@ -435,7 +436,7 @@ void atirar(int jogador[][10][10], int player){
 					} else if(player == 1){
 						if(jogador[0][j][k] == 1){
 							jogador[0][j][k] = 2;
-							system("cls");
+							system("clear");
 							tabuleiro(jogador, player, 1);
 							tabuleiro(jogador, player, 2);
 							printf("\n\nVoce acertou! Pressione qualquer tecla para continuar!");
@@ -444,7 +445,7 @@ void atirar(int jogador[][10][10], int player){
 							break;
 						} else if(jogador[0][j][k] != 2 && jogador[0][j][k] != 3){
 							jogador[0][j][k] = 3;
-							system("cls");
+							system("clear");
 							tabuleiro(jogador, player, 1);
 							tabuleiro(jogador, player, 2);
 							printf("\n\nVoce errou! Pressione qualquer tecla para continuar!");
@@ -491,11 +492,7 @@ void game_over(int player){
 
 int main(){
 	int player = 0, jogador[2][10][10], vencedor = -1;
-	#ifdef WIN32
-		system("CLS");
-	#else
-		system("clear");
-	#endif<br />
+
 	preencheTab(jogador);
 	posicoesBarcos(jogador, player);
 	while(vencedor = -1){
@@ -503,7 +500,7 @@ int main(){
 		atirar(jogador, player);
 		vencedor = verificaVencedor(jogador, player);
 		if(vencedor > -1){
-			system("cls");
+			system("clear");
 			tabuleiro(jogador, 0, 1);
 			tabuleiro(jogador, 1, 1);
 			game_over(player);
@@ -513,7 +510,7 @@ int main(){
 		atirar(jogador, player);
 		vencedor = verificaVencedor(jogador, player);
 		if(vencedor > -1){
-			system("cls");
+			system("clear");
 			tabuleiro(jogador, 0, 1);
 			tabuleiro(jogador, 1, 1);
 			game_over(player);
