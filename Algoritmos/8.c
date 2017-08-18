@@ -8,9 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <curses.h>
-#include <string.h>
 #define TOTAL_BARCOS 5
-
+// PARA RODAR ESSE BATALHA NAVAL NO TERMINAL DO LINUX PRECISA RODAR NO GCC DA SEGUINTE FORMA -- gcc -o hello_world hello_world.c -lncurses
 void preencheTab(int jogador[][10][10]){
     int x,y,z;
 	for( x = 0; x < 2;x++){
@@ -417,7 +416,7 @@ void atirar(int jogador[][10][10], int player){
 							tabuleiro(jogador, player, 1);
 							tabuleiro(jogador, player, 2);
 							printf("\n\nVoce acertou! Pressione qualquer tecla para continuar!");
-							getch();
+							//getch();
 							ok = 1;
 							break;
 						} else if(jogador[1][j][k] != 2 && jogador[1][j][k] != 3){
@@ -426,7 +425,7 @@ void atirar(int jogador[][10][10], int player){
 							tabuleiro(jogador, player, 1);
 							tabuleiro(jogador, player, 2);
 							printf("\n\nVoce errou! Pressione qualquer tecla para continuar!");
-							getch();
+							//getch();
 							ok = 1;
 							break;
 						}else{
@@ -440,7 +439,7 @@ void atirar(int jogador[][10][10], int player){
 							tabuleiro(jogador, player, 1);
 							tabuleiro(jogador, player, 2);
 							printf("\n\nVoce acertou! Pressione qualquer tecla para continuar!");
-							getch();
+							//getch();
 							ok = 1;
 							break;
 						} else if(jogador[0][j][k] != 2 && jogador[0][j][k] != 3){
@@ -449,7 +448,7 @@ void atirar(int jogador[][10][10], int player){
 							tabuleiro(jogador, player, 1);
 							tabuleiro(jogador, player, 2);
 							printf("\n\nVoce errou! Pressione qualquer tecla para continuar!");
-							getch();
+							//getch();
 							ok = 1;
 							break;
 						}else{
@@ -487,7 +486,7 @@ int verificaVencedor(int jogador[][10][10], int player){
 
 void game_over(int player){
 	printf("\n\nO player %d venceu! Pressione qualquer tecla para finalizar o jogo.", player + 1);
-	getch();
+	//getch();
 }
 
 int main(){
