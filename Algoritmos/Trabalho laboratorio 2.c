@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<stdlib.h>
 #define TAM 10
 
 int menu(){
@@ -13,9 +14,9 @@ int menu(){
     printf("7 - Sair\n");
     scanf("%d",&op);
     return op;
-    
+
 }
- typedef struct  { 
+ typedef struct  {
     int tam;
     int qtd;
     int *p;
@@ -30,20 +31,81 @@ void inicializarLista(elemento lista[TAM]){
     }
 }
 
-
 void inserir(elemento lista[TAM]){
     int pos;
+    int i;
+    int numero;
     printf("Digite o numero da posicao que vc deseja inserir: ");
     scanf("%d",&pos);
-    if(pos >= 0 && pos < TAM)
-    if (lista[pos-1].p != NULL){
-        
-        
+    if(lista[pos-1]->p == NULL){
+        printf("Digite o elemento que vc deseja inserir: ");
+        scanf("%d",&numero);
+        for(i=0;i<TAM;i++){
+            if(lista[pos-1]->p[i+1]!= 0){
+                lista[pos-1]->qtd++;
+                if( lista[pos-1]->qtd == TAM)
+                    printf("Nao tem mais espacos para inserir um numero nessa estrutura\n");
+            }
+            else
+                p[i+1] = numero;
+                 lista[pos-1]->qtd++;
+        }
     }
-     
+    else{
+        inicializarLista(lista);
+        printf("Digite o tamanho da estrutura auxiliar: ");
+        scanf("%d",&lista[pos-1].tam);
+        *p = (int*)malloc(lista[pos].tam*sizeof(int));
+        printf("Digite o elemento que vc deseja inserir: ");
+        scanf("%d",&numero);
+        for( i=0;i<TAM;i++){
+            if(lista.[pos-1]->p[i+1]!= 0){
+                lista[pos-1]->qtd++;
+                if( lista[pos-1]->qtd == TAM)
+                    printf("Nao tem mais espacos para inserir um numero nessa estrutura\n");
+            }
+            else{
+                lista[pos-1]->p[i+1] = numero;
+                 lista[pos-1].qtd++;
+            }
+        }
+    }
 }
- 
-     
+
+
+ void listar(elemento lista[TAM]){
+    int i;
+    int n;
+    for(i=0;i<TAM;i++){
+        if(lista[i+1]->p != NULL){
+            printf("Estrutura ainda nao criada\n");
+            return 0;
+        }
+        printf("Estrutura %d",i+1);
+
+        for(j=0;j<=lista[i+1]->p;j++)
+                printf("Elemento: %d\n",lista[i+1]->p[j+1]);
+
+
+    }
+
+
+ }
+void ordenar(elemento lista[TAM]){
+    int i;
+    int aux=0;
+    for(i=0;i<TAM;i++){
+        for(j=1;j<=lista[i]->p;j++){
+            if(lista[i]->p[j+1] < lista[i]->p[j]){
+                aux = lista[i]->p[j+1];
+                lista[i]->p[j+1] = lista[i]->p[j];
+                lista[i]->p[j] = aux;
+            }
+        }
+    }
+
+
+}
 
 
 int main(){
@@ -54,9 +116,13 @@ int main(){
         op = menu();
         switch(op){
             case 1:
-               
-                
-                
+                inserir(lista);
+                break;
+            case 2:
+                listar(lista);
+                break;
+            case 3:
+
             case 7:
                 return 0;
                 break;
@@ -64,5 +130,5 @@ int main(){
     }while(op != 7);
 
 
-    
+
 }
