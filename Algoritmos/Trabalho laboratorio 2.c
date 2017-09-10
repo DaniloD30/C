@@ -4,6 +4,7 @@
 
 int menu(){
     int op;
+    printf("-----------------------------------------\n");
     printf("----------------- Menu ------------------\n");
     printf("1 - Inserir elemento\n");
     printf("2 - Listar os numeros de todas as estruturas\n");
@@ -12,14 +13,16 @@ int menu(){
     printf("5 - Excluir um elemento\n");
     printf("6 - Aumentar o tamanho de uma estrutura auxiliar\n");
     printf("7 - Sair\n");
+    printf("Digite um das opcao: ");
     scanf("%d",&op);
     return op;
 
 }
- typedef struct  {
+ typedef struct{
     int tam;
     int qtd;
     int *p;
+
 }elemento;
 
 void inicializarLista(elemento lista[TAM]){
@@ -35,83 +38,134 @@ void inserir(elemento lista[TAM]){
     int pos;
     int i;
     int numero;
+    int x=0;
     printf("Digite o numero da posicao que vc deseja inserir: ");
     scanf("%d",&pos);
-    if(lista[pos-1]->p == NULL){
+
+    if(lista[pos-1].tam != 0){
         printf("Digite o elemento que vc deseja inserir: ");
         scanf("%d",&numero);
-        for(i=0;i<TAM;i++){
-            if(lista[pos-1]->p[i+1]!= 0){
-                lista[pos-1]->qtd++;
-                if( lista[pos-1]->qtd == TAM)
-                    printf("Nao tem mais espacos para inserir um numero nessa estrutura\n");
+        x=0;
+        for(i=0;i<lista[pos-1].tam;i++){
+            if(lista[pos-1].p[i] == -1){
+                lista[pos-1].p[i] = numero;
+                 lista[pos-1].qtd++;
+                 x=1;
+                printf("Numero Inserido com Sucesso na posicao %d\n", i);
+                break;
             }
-            else
-                p[i+1] = numero;
-                 lista[pos-1]->qtd++;
         }
+        if(x == 0)
+                printf("---------------- Estrutura com todas as posicoes preenchidas----------------\n");
     }
     else{
-        inicializarLista(lista);
         printf("Digite o tamanho da estrutura auxiliar: ");
         scanf("%d",&lista[pos-1].tam);
-        *p = (int*)malloc(lista[pos].tam*sizeof(int));
+
+        lista[pos-1].p = (int*)malloc(lista[pos].tam*sizeof(int));
+
+        for(i=0;i<lista[pos-1].tam;i++)
+            lista[pos-1].p[i] = -1;
+
         printf("Digite o elemento que vc deseja inserir: ");
         scanf("%d",&numero);
-        for( i=0;i<TAM;i++){
-            if(lista.[pos-1]->p[i+1]!= 0){
-                lista[pos-1]->qtd++;
-                if( lista[pos-1]->qtd == TAM)
-                    printf("Nao tem mais espacos para inserir um numero nessa estrutura\n");
-            }
-            else{
-                lista[pos-1]->p[i+1] = numero;
-                 lista[pos-1].qtd++;
-            }
-        }
+        for(i=0;i<lista[pos-1].tam;i++)
+             if(lista[pos-1].p[i] == -1){
+                lista[pos-1].p[i] = numero;
+                lista[pos-1].qtd++;
+                printf("Numero Inserido com Sucesso na posicao %d\n", i);
+                break;
+             }
+
+
     }
 }
-
-
- void listar(elemento lista[TAM]){
+void printar(elemento lista[TAM]){
     int i;
-    int n;
+    int j;
+    int tamanho;
+
     for(i=0;i<TAM;i++){
-        if(lista[i+1]->p != NULL){
+        if(lista[i].tam == 0)
             printf("Estrutura ainda nao criada\n");
-            return 0;
+        else{
+            printf("Estrutura %d\n",i+1);
+            printf("Tamanho da estrutura: %d\n",lista[i].tam);
+            tamanho = lista[i].tam;
+            for(j=0;j<tamanho;j++){
+                if(lista[i].p[j]== -1)
+                    printf("Posicao n preenchida\n");
+                else
+                    printf("Elemento: %d\n",lista[i].p[j]);
         }
-        printf("Estrutura %d",i+1);
-
-        for(j=0;j<=lista[i+1]->p;j++)
-                printf("Elemento: %d\n",lista[i+1]->p[j+1]);
-
-
+        }
     }
-
-
  }
 void ordenar(elemento lista[TAM]){
     int i;
     int aux=0;
+    int tamanho;
+    int j;
     for(i=0;i<TAM;i++){
-        for(j=1;j<=lista[i]->p;j++){
-            if(lista[i]->p[j+1] < lista[i]->p[j]){
-                aux = lista[i]->p[j+1];
-                lista[i]->p[j+1] = lista[i]->p[j];
-                lista[i]->p[j] = aux;
+        tamanho = lista[i].tam;
+        for(j=0;j<=tamanho;j++){
+            if(lista[i].p[j+1] < lista[i].p[j]){
+                aux = lista[i].p[j+1];
+                lista[i].p[j+1] = lista[i].p[j];
+                lista[i].p[j] = aux;
             }
         }
     }
 
+}
+int criarvetor(int* n,elemento lista[TAM]){
+    int x=0;
+    int i;
+    int j;
+    int tamanho;
+     for(i=0;i<TAM;i++){
+        n = (int*)realloc(n,(x+lista[i].tam)*sizeof(int));
+        tamanho = lista[i].tam;
+        for(j=0;j<=tamanho;j++)
+          n[j] = lista[i].p[j];
+
+       x+=lista[i].tam;
+     }
+     return x;
+
+}
+
+void ordenarVetor(int* n,elemento lista[TAM]){
+    int tamanho;
+    tamanho = criarvetor(n,lista);
+    int j;
+    int aux;
+    for(j=0;j<=tamanho;j++)
+        if(n[j+1] < n[j]){
+            aux = n[j+1];
+            n[j+1] = n[j];
+            n[j] = aux;
+            }
+    }
+
+void listarVetor(int* n,elemento lista[TAM]){
+    int i;
+    int tamanho;
+    tamanho = criarvetor(n,lista);
+    for(i = 0;i<tamanho;i++)
+        printf("%d",n[i]);
 
 }
 
 
+
+
+
 int main(){
     int op;
+    int* n = NULL;
     elemento lista[TAM];
-    int pos;
+    inicializarLista(lista);
     do{
         op = menu();
         switch(op){
@@ -119,16 +173,27 @@ int main(){
                 inserir(lista);
                 break;
             case 2:
-                listar(lista);
+                printar(lista);
                 break;
             case 3:
-
+                ordenar(lista);
+                printar(lista);
+                break;
+            case 4:
+                criarvetor(n,lista);
+                ordenarVetor(n,lista);
+                listarVetor(n,lista);
+                break;
             case 7:
+                printf("Finalizando o programa\n");
                 return 0;
+                break;
+            default:
+                printf("Numero invalido\n");
                 break;
         }
     }while(op != 7);
 
 
-
+    return 0;
 }
