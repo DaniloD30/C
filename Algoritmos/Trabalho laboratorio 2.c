@@ -39,15 +39,17 @@ void inserir(elemento lista[TAM]){
     int i;
     int numero;
     int x=0;
-    printf("Digite o numero da posicao que vc deseja inserir: ");
-    scanf("%d",&pos);
+    do{
+        printf("Digite o numero da posicao que vc deseja inserir: ");
+        scanf("%d",&pos);
+    }while(pos < 1 && pos > 10);
 
     if(lista[pos-1].tam != 0){
         printf("Digite o elemento que vc deseja inserir: ");
         scanf("%d",&numero);
         x=0;
         for(i=0;i<lista[pos-1].tam;i++){
-            if(lista[pos-1].p[i] == -1){
+            if(lista[pos-1].p[i] == NULL){
                 lista[pos-1].p[i] = numero;
                  lista[pos-1].qtd++;
                  x=1;
@@ -65,12 +67,12 @@ void inserir(elemento lista[TAM]){
         lista[pos-1].p = (int*)malloc(lista[pos].tam*sizeof(int));
 
         for(i=0;i<lista[pos-1].tam;i++)
-            lista[pos-1].p[i] = -1;
+            lista[pos-1].p[i] = NULL;
 
         printf("Digite o elemento que vc deseja inserir: ");
         scanf("%d",&numero);
         for(i=0;i<lista[pos-1].tam;i++)
-             if(lista[pos-1].p[i] == -1){
+             if(lista[pos-1].p[i] == NULL){
                 lista[pos-1].p[i] = numero;
                 lista[pos-1].qtd++;
                 printf("Numero Inserido com Sucesso na posicao %d\n", i);
@@ -93,8 +95,8 @@ void printar(elemento lista[TAM]){
             printf("Tamanho da estrutura: %d\n",lista[i].tam);
             tamanho = lista[i].tam;
             for(j=0;j<tamanho;j++){
-                if(lista[i].p[j]== -1)
-                    printf("Posicao n preenchida\n");
+                if(lista[i].p[j]== NULL)
+                    printf("Posicao nao preenchida\n");
                 else
                     printf("Elemento: %d\n",lista[i].p[j]);
         }
@@ -103,20 +105,28 @@ void printar(elemento lista[TAM]){
  }
 void ordenar(elemento lista[TAM]){
     int i;
+    //int aux=0;
+    //int tamanho=0;
+    int y;
+    int x=0;
+    int menor=0;
     int aux=0;
-    int tamanho;
     int j;
     for(i=0;i<TAM;i++){
-        tamanho = lista[i].tam;
-        for(j=0;j<=tamanho;j++){
-            if(lista[i].p[j+1] < lista[i].p[j]){
-                aux = lista[i].p[j+1];
-                lista[i].p[j+1] = lista[i].p[j];
-                lista[i].p[j] = aux;
+        for( y=0;y<lista[i].tam;y++){
+            menor = lista[i].p[y];
+            for( j=y+1;y<lista[i].tam;y++)
+                if(lista[i].p[j]<menor){
+                    menor = lista[i].p[j];
+                    x = j;
+                }
+        if(menor!=lista[i].p[y]){
+            aux = lista[i].p[y];
+            lista[i].p[y]= lista[i].p[x];
+            lista[i].p[x] = aux;
             }
         }
     }
-
 }
 int criarvetor(int* n,elemento lista[TAM]){
     int x=0;
