@@ -66,18 +66,22 @@ void inserir(elemento lista[TAM]){
 
         lista[pos-1].p = (int*)malloc(lista[pos].tam*sizeof(int));
 
-        for(i=0;i<lista[pos-1].tam;i++)
-            lista[pos-1].p[i] = NULL;
 
-        printf("Digite o elemento que vc deseja inserir: ");
-        scanf("%d",&numero);
-        for(i=0;i<lista[pos-1].tam;i++)
+
+
+            for(i=0;i<lista[pos-1].tam;i++)
+                lista[pos-1].p[i] = NULL;
+
+            printf("Digite o elemento que vc deseja inserir: ");
+            scanf("%d",&numero);
+            for(i=0;i<lista[pos-1].tam;i++)
              if(lista[pos-1].p[i] == NULL){
                 lista[pos-1].p[i] = numero;
                 lista[pos-1].qtd++;
                 printf("Numero Inserido com Sucesso na posicao %d\n", i);
                 break;
              }
+
 
 
     }
@@ -108,6 +112,55 @@ void ordenar(elemento lista[TAM]){
     //int aux=0;
     //int tamanho=0;
     int y;
+    //int x=0;
+    int menor=0;
+    //int aux=0;
+    int j;
+    int p;
+    int t=0;
+    int tamanho;
+    int auxiliar[t];
+    for(y=0;y<TAM;y++){
+            t = lista[y].tam;
+            for(i=0;i<t;i++)
+                auxiliar[i] = 0;
+        for(i=0;i<lista[y].tam;i++){
+            menor = lista[y].p[i];
+            for( j=i+1;j<lista[y].tam;j++)
+                if(lista[y].p[j]<menor){
+                    menor = lista[y].p[j];
+                    p=j;
+                }
+            if(menor!=lista[y].p[i]){
+                //aux = lista[y].p[i];
+                //lista[i].p[y]= lista[y].p[p];
+                //lista[y].p[p] = aux;
+                auxiliar[i] = lista[y].p[p];
+                auxiliar[p] = lista[y].p[i];
+            }
+        }
+    }
+     for(i=0;i<TAM;i++){
+        if(lista[i].tam == 0)
+            printf("Estrutura ainda nao criada\n");
+        else{
+            printf("Estrutura %d\n",i+1);
+            printf("Tamanho da estrutura: %d\n",lista[i].tam);
+            tamanho = lista[i].tam;
+            for(j=0;j<tamanho;j++){
+                if(lista[i].p[j]== NULL)
+                    printf("Posicao nao preenchida\n");
+                else
+                    printf("Elemento: %d\n",auxiliar[j]);
+        }
+        }
+    }
+}
+/*void ordenar(elemento lista[TAM]){
+    int i;
+    //int aux=0;
+    //int tamanho=0;
+    int y;
     int x=0;
     int menor=0;
     int aux=0;
@@ -123,37 +176,51 @@ void ordenar(elemento lista[TAM]){
                 }
             if(menor!=lista[y].p[i]){
                 aux = lista[y].p[i];
-                lista[i].p[y]= lista[y].p[p];
+                lista[y].p[i]= lista[y].p[p];
                 lista[y].p[p] = aux;
             }
         }
     }
-}
-void criarvetor(int* n,int* y,elemento lista[TAM]){
+}*/
+int criarvetor(int* n,elemento lista[TAM]){
     int i;
     int j;
+    int x=0;
     int tamanho;
      for(i=0;i<TAM;i++){
-        n = (int*)realloc(n,(*y+lista[i].tam)*sizeof(int));
-        tamanho = lista[i].tam;
-        for(j=0;j<=tamanho;j++)
-          n[j] = lista[i].p[j];
+        if(lista[i].tam != 0){
+            n = (int*)realloc(n,(x+lista[i].tam)*sizeof(int));
+            tamanho = lista[i].tam;
+            for(j=0;j<tamanho;j++)
+                n[j] = lista[i].p[j];
 
-       *y+=lista[i].tam;
+            x+=lista[i].tam;
+        }
      }
+     return x;
 }
 
 void ordenarVetor(int* n,elemento lista[TAM]){
     int tamanho;
     tamanho = criarvetor(n,lista);
     int j;
-    int aux;
-    for(j=0;j<=tamanho;j++)
-        if(n[j+1] < n[j]){
-            aux = n[j+1];
-            n[j+1] = n[j];
-            n[j] = aux;
+    int aux=0;
+    int menor =0;
+    int p;
+    int i;
+    for(i=0;i<tamanho;i++){
+            menor = n[i];
+            for( j=i+1;j<tamanho;j++)
+                if(n[j]<menor){
+                    menor = n[j];
+                    p=j;
+                }
+            if(menor!=n[i]){
+                aux = n[i];
+                n[i]= n[p];
+                n[p] = aux;
             }
+        }
     }
 
 void listarVetor(int* n,elemento lista[TAM]){
@@ -172,7 +239,7 @@ void listarVetor(int* n,elemento lista[TAM]){
 int main(){
     int op;
     int* n = NULL;
-    int* y = NULL;
+    //int* y = NULL;
     elemento lista[TAM];
     inicializarLista(lista);
     do{
@@ -186,7 +253,7 @@ int main(){
                 break;
             case 3:
                 ordenar(lista);
-                printar(lista);
+                //printar(lista);
                 break;
             case 4:
                 criarvetor(n,lista);
