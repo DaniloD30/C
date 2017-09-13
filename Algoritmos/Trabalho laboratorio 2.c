@@ -13,7 +13,8 @@ int menu(){
     printf("4 - Listar todos os numeros de forma ordenada\n");
     printf("5 - Excluir um elemento\n");
     printf("6 - Aumentar o tamanho de uma estrutura auxiliar\n");
-    printf("7 - Sair\n");
+    printf("7 - Limpar tela\n");
+    printf("8 - Sair\n");
     do{
         printf("Digite um das opcao: ");
         fflush(stdin);
@@ -30,6 +31,7 @@ int menu(){
     int tam;
     int qtd;
     int *p;
+    int *n;
 
 }elemento;
 
@@ -39,6 +41,7 @@ void inicializarLista(elemento lista[TAM]){
         lista[i].tam = 0;
         lista[i].qtd = 0;
         lista[i].p = NULL;
+        lista[i].n = NULL;
     }
 }
 
@@ -198,58 +201,60 @@ void ordenar(elemento lista[TAM]){
         }
     }
 }*/
-int criarvetor(int* n,elemento lista[TAM]){
+void criarvetor(int*x,elemento lista[TAM]){
     int i;
     int j;
-    int x=0;
-    int tamanho;
+
+
      for(i=0;i<TAM;i++){
         if(lista[i].tam != 0){
-            n = (int*)realloc(n,(x+lista[i].tam)*sizeof(int));
-            tamanho = lista[i].tam;
-            for(j=0;j<tamanho;j++)
-                n[j] = lista[i].p[j];
+            lista[i].n = (int*)realloc(lista[i].n,(*x+lista[i].tam)*sizeof(int));
+             //for(i=0;i<lista[i].tam;i++)
+                //lista[i].n[i] = NULL;
 
-            x+=lista[i].tam;
+            for(j=0;j< lista[i].tam;j++)
+                lista[i].n[x + j] = lista[i].p[j];
+
+            *x+=lista[i].tam;
         }
      }
-     return x;
+
 }
 
-void ordenarVetor(int* n,elemento lista[TAM]){
-    int tamanho;
-    tamanho = criarvetor(n,lista);
+void ordenarVetor(int x,elemento lista[TAM]){
+    //int tamanho;
+    //tamanho = criarvetor(lista);
     int j;
     int aux=0;
     int menor =0;
     int p;
     int i;
-    for(i=0;i<tamanho;i++){
-            menor = n[i];
-            for( j=i+1;j<tamanho;j++)
-                if(n[j]<menor){
-                    menor = n[j];
+    for(i=0;i<x;i++){
+            menor = lista[i].n[i];
+            for( j=i+1;j<x;j++)
+                if(lista[i].n[j]<menor){
+                    menor = lista[i].n[j];
                     p=j;
                 }
             if(menor!=n[i]){
-                aux = n[i];
-                n[i]= n[p];
-                n[p] = aux;
+                aux = lista[i].n[i];
+                lista[i].n[i]= lista[i].n[p];
+                lista[i].n[p] = aux;
             }
         }
     }
 
-void listarVetor(int* n,elemento lista[TAM]){
+void listarVetor(int x,elemento lista[TAM]){
     int i;
-    int tamanho;
-    tamanho = criarvetor(n,lista);
-    for(i = 0;i<tamanho;i++)
-        printf("%d",n[i]);
+    //int tamanho;
+    //tamanho = criarvetor(lista);
+    for(i = 0;i<x;i++)
+        printf("%d",lista[i].n[i]);
 
 }
 int main(){
     int op;
-    int* n = NULL;
+    int x = 0;
     //int* y = NULL;
     elemento lista[TAM];
     inicializarLista(lista);
@@ -267,11 +272,16 @@ int main(){
                 //printar(lista);
                 break;
             case 4:
-                criarvetor(n,lista);
-                ordenarVetor(n,lista);
-                listarVetor(n,lista);
+                criarvetor(&x,lista);
+                ordenarVetor(x,lista);
+                listarVetor(x,lista);
                 break;
             case 7:
+                printf("Limpando tela\n");
+                system("cls");
+                op = menu();
+                break;
+            case 8:
                 printf("Finalizando o programa\n");
                 return 0;
                 break;
