@@ -32,7 +32,7 @@ int menu(){
     int tam;
     int qtd;
     int *p;
-    int *n;
+    //int *n;
     int* auxiliar;
 
 }elemento;
@@ -43,7 +43,7 @@ void inicializarLista(elemento lista[TAM]){
         lista[i].tam = 0;
         lista[i].qtd = 0;
         lista[i].p = NULL;
-        lista[i].n = NULL;
+        //lista[i].n = NULL;
         lista[i].auxiliar = NULL;
     }
 }
@@ -80,7 +80,7 @@ void inserir(elemento lista[TAM]){
 
         lista[pos-1].p = (int*)malloc(lista[pos-1].tam*sizeof(int));
 
-
+        if(lista[pos-1].p){
 
 
             for(i=0;i<lista[pos-1].tam;i++)
@@ -95,6 +95,12 @@ void inserir(elemento lista[TAM]){
                 printf("Numero Inserido com Sucesso na posicao %d\n", i);
                 break;
              }
+        }
+        else{
+             printf("Espaço em memória insuficiente\n");
+            free(lista[pos-1].p);
+            exit(1);
+        }
 
 
 
@@ -128,10 +134,10 @@ void ordenar(elemento lista[TAM]){
     //int tamanho=0;
     int y;
     //int x=0;
-    int menor=0;
+    //int menor=0;
     int aux=0;
     int j;
-    int p=0;
+    //int p=0;
     //int t=0;
         //int tamanho;
         //int auxiliar[t];
@@ -154,16 +160,11 @@ void ordenar(elemento lista[TAM]){
 
                 }
             }
-
-
-
-
-
-     for(i=0;i<TAM;i++){
+    for(i=0;i<TAM;i++){
         if(lista[i].tam == 0)
             printf("Estrutura ainda nao criada\n");
         else{
-                 printf("\n ");
+            printf("\n ");
             printf(">>>Estrutura %d\n",i+1);
             printf("Tamanho da estrutura: %d\n",lista[i].tam);
 
@@ -177,53 +178,37 @@ void ordenar(elemento lista[TAM]){
     }
 
 }
-/*void ordenar(elemento lista[TAM]){
-    int i;
-    //int aux=0;
-    //int tamanho=0;
-    int y;
-    int x=0;
-    int menor=0;
-    int aux=0;
-    int j;
-    int p;
-    for(y=0;y<TAM;y++){
-        for(i=0;i<lista[y].tam;i++){
-            menor = lista[y].p[i];
-            for( j=i+1;j<lista[y].tam;j++)
-                if(lista[y].p[j]<menor){
-                    menor = lista[y].p[j];
-                    p=j;
-                }
-            if(menor!=lista[y].p[i]){
-                aux = lista[y].p[i];
-                lista[y].p[i]= lista[y].p[p];
-                lista[y].p[p] = aux;
-            }
-        }
-    }
-}*/
-void criarvetor(int*x,elemento lista[TAM]){
+
+int* criarvetor(int*x,int* y,elemento lista[TAM]){
     int i;
     int j;
 
 
      for(i=0;i<TAM;i++){
         if(lista[i].tam != 0){
-            lista[i].n = (int*)realloc(lista[i].n,(*x+lista[i].tam)*sizeof(int));
+            y = (int*)realloc(y,(*x+lista[i].tam)*sizeof(int));
              //for(i=0;i<lista[i].tam;i++)
                 //lista[i].n[i] = NULL;
+            if(y){
 
-            for(j=0;j< lista[i].tam;j++)
-                lista[i].n[*x + j] = lista[i].p[j];
+                for(j=0;j< lista[i].tam;j++)
+                    y[*x + j] = lista[i].p[j];
 
             *x+=lista[i].tam;
+            }
+            else{
+                 printf("Espaço em memória insuficiente\n");
+                free(y);
+                exit(1);
+            }
+
         }
      }
+     return y;
 
 }
 
-void ordenarVetor(int x,elemento lista[TAM]){
+void ordenarVetor(int x,int* y){
     //int tamanho;
     //tamanho = criarvetor(lista);
     int j;
@@ -231,33 +216,45 @@ void ordenarVetor(int x,elemento lista[TAM]){
     int menor =0;
     int p;
     int i;
-    for(i=0;i<x;i++){
-            menor = lista[i].n[i];
-            for( j=i+1;j<x;j++)
-                if(lista[i].n[j]<menor){
-                    menor = lista[i].n[j];
-                    p=j;
-                }
-            if(menor!= lista[i].n[i]){
-                aux = lista[i].n[i];
-                lista[i].n[i]= lista[i].n[p];
-                lista[i].n[p] = aux;
+    for(i=x-1;i>=1;i--){
+        for(j=0;j<i;j++)
+            if(y[j]>y[j+1]){
+                aux = y[j];
+                y[j] = y[j+1];
+                y[j+1] = aux;
             }
-        }
+                        //auxiliar[i] = lista[y].p[p];
+                        //auxiliar[p] = lista[y].p[i];
     }
 
-void listarVetor(int x,elemento lista[TAM]){
+    }
+
+
+
+void listarVetor(int x,int* y){
     int i;
     //int tamanho;
     //tamanho = criarvetor(lista);
     for(i = 0;i<x;i++)
-        printf("%d",lista[i].n[i]);
+        printf("Elemento: %d\n",y[i]);
 
+
+    free(y);
+
+}
+void liberar(int* y, elemento lista[TAM]){
+    int i;
+    free(y);
+    for(i=0;i<TAM;i++){
+        free(lista[i].p);
+        free(lista[i].auxiliar);
+    }
 }
 int main(){
     int op;
     int x = 0;
-    //int* y = NULL;
+
+    int* y = NULL;
     elemento lista[TAM];
     inicializarLista(lista);
     do{
@@ -274,9 +271,9 @@ int main(){
                 //printar(lista);
                 break;
             case 4:
-                criarvetor(&x,lista);
-                ordenarVetor(x,lista);
-                listarVetor(x,lista);
+                 y = criarvetor(&x,y,lista);
+                ordenarVetor(x,y);
+                listarVetor(x,y);
                 break;
             case 7:
                 printf("Limpando tela\n");
