@@ -191,8 +191,9 @@ int* criarvetor(int*x,int* y,elemento lista[TAM]){
                 //lista[i].n[i] = NULL;
             if(y){
 
-                for(j=0;j< lista[i].tam;j++)
+                for(j=0;j< lista[i].tam;j++){
                     y[*x + j] = lista[i].p[j];
+                }
 
             *x+=lista[i].tam;
             }
@@ -239,7 +240,33 @@ void listarVetor(int x,int* y){
         printf("Elemento: %d\n",y[i]);
 
 
+
+
     free(y);
+
+}
+
+void excluir(elemento lista[TAM]){
+    int pos;
+    int numero;
+    int x=0;
+    int i;
+    printf(">> Informe a posição da estrutura principal: ");
+    scanf("%d",&pos);
+    printf( Digite qual numero excluir: ");
+    scanf("%d",&numero);
+
+    for(j=0;j<lista[pos].tam;j++){
+        if(lista[pos].p[j] == numero)
+            x = j;
+
+
+
+
+
+
+
+
 
 }
 void liberar(int* y, elemento lista[TAM]){
@@ -274,6 +301,10 @@ int main(){
                  y = criarvetor(&x,y,lista);
                 ordenarVetor(x,y);
                 listarVetor(x,y);
+                break;
+            case 5:
+                break;
+            case 6:
                 break;
             case 7:
                 printf("Limpando tela\n");
