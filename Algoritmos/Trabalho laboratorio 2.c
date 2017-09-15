@@ -17,7 +17,7 @@ int menu(){
     printf("8 - Sair\n");
     do{
         printf("Digite um das opcao: ");
-        fflush(stdin);
+        __fpurge(stdin);
         gets(op);
          printf("\n ");
     }while(op < 48 && op > 57);
@@ -59,8 +59,10 @@ void inserir(elemento lista[TAM]){
     }while(pos < 1 && pos > 10);
 
     if(lista[pos-1].tam != 0){
+
         printf("Digite o elemento que vc deseja inserir: ");
         scanf("%d",&numero);
+
         x=0;
         for(i=0;i<lista[pos-1].tam;i++){
             if(lista[pos-1].p[i] == NULL){
@@ -183,28 +185,36 @@ int* criarvetor(int*x,int* y,elemento lista[TAM]){
     int i;
     int j;
 
-
+    int count = 0;
      for(i=0;i<TAM;i++){
         if(lista[i].tam != 0){
-            y = (int*)realloc(y,(*x+lista[i].tam)*sizeof(int));
-             //for(i=0;i<lista[i].tam;i++)
+            //if(*ultimo != i){
+                y = (int*)realloc(y,(*x+lista[i].tam)*sizeof(int));
+                //for(i=0;i<lista[i].tam;i++)
                 //lista[i].n[i] = NULL;
-            if(y){
-
+                //if(y){
                 for(j=0;j< lista[i].tam;j++){
-                    y[*x + j] = lista[i].p[j];
-                }
+                        y[*x + j] = lista[i].p[j];
+                        count++;
+                    }
 
-            *x+=lista[i].tam;
-            }
-            else{
-                 printf("Espaço em memória insuficiente\n");
-                free(y);
-                exit(1);
+                    *x+=lista[i].tam;
+                    //*ultimo = 0;
+                //}
+
+
+                /*else{
+                    printf("Espaço em memória insuficiente\n");
+                    free(y);
+                    exit(1);
+                }*/
+
             }
 
         }
-     }
+
+
+
      return y;
 
 }
@@ -242,7 +252,7 @@ void listarVetor(int x,int* y){
 
 
 
-    free(y);
+
 
 }
 
@@ -251,27 +261,19 @@ void excluir(elemento lista[TAM]){
     int numero;
     int x=0;
     int i;
+    int j;
     printf(">> Informe a posição da estrutura principal: ");
     scanf("%d",&pos);
-    printf( Digite qual numero excluir: ");
+    printf( "Digite qual numero excluir: ");
     scanf("%d",&numero);
-
     for(j=0;j<lista[pos].tam;j++){
         if(lista[pos].p[j] == numero)
             x = j;
-
-
-
-
-
-
-
-
-
+}
 }
 void liberar(int* y, elemento lista[TAM]){
     int i;
-    free(y);
+    //free(y);
     for(i=0;i<TAM;i++){
         free(lista[i].p);
         free(lista[i].auxiliar);
@@ -280,7 +282,7 @@ void liberar(int* y, elemento lista[TAM]){
 int main(){
     int op;
     int x = 0;
-
+    //int ult = -1;
     int* y = NULL;
     elemento lista[TAM];
     inicializarLista(lista);
@@ -288,7 +290,7 @@ int main(){
         op = menu();
         switch(op){
             case 1:
-                inserir(lista);
+             inserir(lista);
                 break;
             case 2:
                 printar(lista);
@@ -301,6 +303,8 @@ int main(){
                  y = criarvetor(&x,y,lista);
                 ordenarVetor(x,y);
                 listarVetor(x,y);
+                 y = NULL;
+                 x = 0;
                 break;
             case 5:
                 break;
@@ -320,7 +324,5 @@ int main(){
                 break;
         }
     }while(op != 7);
-
-
     return 0;
 }
