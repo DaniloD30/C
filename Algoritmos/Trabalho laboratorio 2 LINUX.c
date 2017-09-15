@@ -17,7 +17,7 @@ int menu(){
     printf("8 - Sair\n");
     do{
         printf("Digite um das opcao: ");
-        fflush(stdin);
+       __fpurge(stdin);
         gets(op);
          printf("\n ");
     }while(op < 48 && op > 57);
@@ -139,45 +139,55 @@ void ordenar(elemento lista[TAM]){
     //int menor=0;
     int aux=0;
     int j;
+    //int count = 0;
     //int p=0;
     //int t=0;
         //int tamanho;
         //int auxiliar[t];
-    for(y=0;y<TAM;y++){
-            if(lista[y].tam != 0 ){
-                lista[y].auxiliar = (int*)malloc(lista[y].tam*sizeof(int));
-                for(i=0;i< lista[y].tam;i++)
-                    lista[y].auxiliar[i] = lista[y].p[i];
+    int pos;
+    printf("Digite a posicao que voce deseja ordenar: ");
+    scanf("%d",&pos);
+    
+    if(lista[pos-1].tam != 0 ){
+                lista[pos-1].auxiliar = (int*)malloc(lista[pos-1].tam*sizeof(int));
+                for(i=0;i< lista[pos-1].tam;i++){
+                    if(lista[pos-1].p[i] != NULL){
+                        lista[pos-1].auxiliar[i] = lista[pos-1].p[i];
+                        lista[pos-1].qtd++;
+                    }
+                }
 
-                for(i=lista[y].tam -1;i>=1;i--){
+                for(i=lista[pos-1].qtd-1;i>=1;i--){
                     for(j=0;j<i;j++)
-                        if(lista[y].auxiliar[j]>lista[y].auxiliar[j+1]){
-                            aux = lista[y].auxiliar[j];
-                            lista[y].auxiliar[j] = lista[y].auxiliar[j+1];
-                            lista[y].auxiliar[j+1] = aux;
+                        if(lista[pos-1].auxiliar[j]>lista[pos-1].auxiliar[j+1]){
+                            aux = lista[pos-1].auxiliar[j];
+                            lista[pos-1].auxiliar[j] = lista[pos-1].auxiliar[j+1];
+                            lista[pos-1].auxiliar[j+1] = aux;
                         }
                         //auxiliar[i] = lista[y].p[p];
                         //auxiliar[p] = lista[y].p[i];
                 }
 
                 }
-            }
-    for(i=0;i<TAM;i++){
-        if(lista[i].tam == 0)
-            printf("Estrutura %d ainda nao criada\n",i+1);
-        else{
-            printf("\n ");
-            printf(">>>Estrutura %d\n",i+1);
-            printf("Tamanho da estrutura: %d\n",lista[i].tam);
-
-            for(j=0;j<lista[i].tam;j++){
-                if(lista[i].auxiliar[j]== NULL)
-                    printf("Posicao %d nao preenchida\n",j+1);
-                else
-                    printf("Elemento: %d\n",lista[i].auxiliar[j]);
-        }
-        }
+    else{
+        printf("Estrutura %d ainda nao criada\n",pos-1);
     }
+        
+            
+            printf("\n ");
+            printf(">>>Estrutura %d\n",pos);
+            //printf("Tamanho da estrutura: %d\n",lista[pos-1].tam);
+
+            for(j=0;j<lista[pos-1].qtd;j++){
+                /*if(lista[pos-1].auxiliar[j]== NULL)
+                    printf("Posicao %d nao preenchida\n",j+1);*/
+                
+                    printf("Elemento: %d\n",lista[pos-1].auxiliar[j]);
+            }
+            
+            lista[pos-1].qtd = 0;
+        
+    
 
 }
 
@@ -246,12 +256,7 @@ void listarVetor(int x,int* y){
     //tamanho = criarvetor(lista);
     for(i = 0;i<x;i++)
         printf("Elemento: %d\n",y[i]);
-
-
-
-
-
-
+    
 }
 
 void excluir(elemento lista[TAM]){
@@ -269,9 +274,11 @@ void excluir(elemento lista[TAM]){
     for(j=0;j<tamanho;j++){
         if(lista[pos-1].p[j] == numero){
             lista[pos-1].p[j] = lista[pos-1].p[tamanho - 1];
-            lista[pos-1].p[tamanho - 1] = NULL;
+            lista[pos-1].p[tamanho - 1] = NULL; 
+            break;
         }
-}
+       
+    }
 }
 void realloca(elemento lista[TAM]){
     int add;
@@ -338,11 +345,12 @@ int main(){
                 break;
             case 7:
                 printf("Limpando tela\n");
-                system("cls");
+                //system("cls");
                 op = menu();
                 break;
             case 8:
                 printf("Finalizando o programa\n");
+                liberar(lista);
                 return 0;
                 break;
             default:
