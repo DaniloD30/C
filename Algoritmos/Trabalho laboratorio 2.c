@@ -164,7 +164,7 @@ void ordenar(elemento lista[TAM]){
             }
     for(i=0;i<TAM;i++){
         if(lista[i].tam == 0)
-            printf("Estrutura %d ainda nao criada\n",i);
+            printf("Estrutura %d ainda nao criada\n",i+1);
         else{
             printf("\n ");
             printf(">>>Estrutura %d\n",i+1);
@@ -192,7 +192,7 @@ int* criarvetor(int*x,int* y,elemento lista[TAM]){
                 y = (int*)realloc(y,(*x+lista[i].tam)*sizeof(int));
                 //for(i=0;i<lista[i].tam;i++)
                 //lista[i].n[i] = NULL;
-                //if(y){
+           // if(y){
                 for(j=0;j< lista[i].tam;j++){
                         y[*x + j] = lista[i].p[j];
                         count++;
@@ -201,13 +201,11 @@ int* criarvetor(int*x,int* y,elemento lista[TAM]){
                     *x+=lista[i].tam;
                     //*ultimo = 0;
                 //}
-
-
-                /*else{
-                    printf("Espaço em memória insuficiente\n");
-                    free(y);
-                    exit(1);
-                }*/
+                //else{
+                    //printf("Espaço em memória insuficiente\n");
+                    //free(y);
+                    //exit(1);
+                //}
 
             }
 
@@ -263,7 +261,7 @@ void excluir(elemento lista[TAM]){
     int i;
     int j;
     int tamanho =0;
-    printf(">> Informe a posição da estrutura principal: ");
+    printf(">> Informe a posicao da estrutura principal: ");
     scanf("%d",&pos);
     printf( "Digite qual numero excluir: ");
     scanf("%d",&numero);
@@ -274,6 +272,24 @@ void excluir(elemento lista[TAM]){
             lista[pos-1].p[tamanho - 1] = NULL;
         }
 }
+}
+void realloca(elemento lista[TAM]){
+    int add;
+    int pos;
+    int i;
+    printf("Informe a posicao da estrutura principal que voce deseja aumentar o tamanho: ");
+    scanf("%d",&pos);
+    printf("Digite o numero de inteiros extras a entrarem na estrutura: ");
+    scanf("%d",&add);
+    if(lista[pos-1].tam != 0){
+        lista[pos-1].p = (int*)realloc(lista[pos-1].p,(add+lista[pos-1].tam)*sizeof(int));
+        lista[pos-1].tam += add;
+        for(i=0;i<lista[pos-1].tam;i++)
+            lista[pos-1].p[i+add] = NULL;
+
+    }
+    else
+        printf(">> Estrutura ainda nao criada para adicionar inteiros extras\n");
 }
 void liberar(elemento lista[TAM]){
     int i;
@@ -315,6 +331,7 @@ int main(){
                 excluir(lista);
                 break;
             case 6:
+                realloca(lista);
                 break;
             case 7:
                 printf("Limpando tela\n");
@@ -332,4 +349,3 @@ int main(){
     }while(op != 7);
     return 0;
 }
-
