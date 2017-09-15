@@ -69,7 +69,7 @@ void inserir(elemento lista[TAM]){
                 lista[pos-1].p[i] = numero;
                  //lista[pos-1].qtd++;
                  x=1;
-                printf("Numero Inserido com Sucesso na posicao %d\n", i);
+                printf("Numero Inserido com Sucesso na posicao %d\n", i+1);
                 break;
             }
         }
@@ -94,7 +94,7 @@ void inserir(elemento lista[TAM]){
              if(lista[pos-1].p[i] == NULL){
                 lista[pos-1].p[i] = numero;
                 //lista[pos-1].qtd++;
-                printf("Numero Inserido com Sucesso na posicao %d\n", i);
+                printf("Numero Inserido com Sucesso na posicao %d\n", i+1);
                 break;
              }
         }
@@ -115,15 +115,15 @@ void printar(elemento lista[TAM]){
 
     for(i=0;i<TAM;i++){
         if(lista[i].tam == 0)
-            printf("Estrutura ainda nao criada\n");
+            printf("Estrutura %d ainda nao criada\n",i+1);
         else{
-                printf("\n ");
+            printf("\n ");
             printf(">>>Estrutura %d\n",i+1);
             printf("Tamanho da estrutura: %d\n",lista[i].tam);
             tamanho = lista[i].tam;
             for(j=0;j<tamanho;j++){
                 if(lista[i].p[j]== NULL)
-                    printf("Posicao nao preenchida\n");
+                    printf("Posicao %d nao preenchida\n",j+1);
                 else
                     printf("Elemento: %d\n",lista[i].p[j]);
         }
@@ -172,7 +172,7 @@ void ordenar(elemento lista[TAM]){
 
             for(j=0;j<lista[i].tam;j++){
                 if(lista[i].auxiliar[j]== NULL)
-                    printf("Posicao nao preenchida\n");
+                    printf("Posicao %d nao preenchida\n",j+1);
                 else
                     printf("Elemento: %d\n",lista[i].auxiliar[j]);
         }
@@ -222,8 +222,8 @@ void ordenarVetor(int x,int* y){
     //tamanho = criarvetor(lista);
     int j;
     int aux=0;
-    int menor =0;
-    int p;
+    //int menor =0;
+    //int p;
     int i;
     for(i=x-1;i>=1;i--){
         for(j=0;j<i;j++)
@@ -257,8 +257,8 @@ void listarVetor(int x,int* y){
 void excluir(elemento lista[TAM]){
     int pos;
     int numero;
-    int x=0;
-    int i;
+    //int x=0;
+//    int i;
     int j;
     int tamanho =0;
     printf(">> Informe a posicao da estrutura principal: ");
@@ -277,15 +277,18 @@ void realloca(elemento lista[TAM]){
     int add;
     int pos;
     int i;
+    int tamanhoAnterior =0;
     printf("Informe a posicao da estrutura principal que voce deseja aumentar o tamanho: ");
     scanf("%d",&pos);
     printf("Digite o numero de inteiros extras a entrarem na estrutura: ");
     scanf("%d",&add);
     if(lista[pos-1].tam != 0){
+        tamanhoAnterior = lista[pos-1].tam;
         lista[pos-1].p = (int*)realloc(lista[pos-1].p,(add+lista[pos-1].tam)*sizeof(int));
         lista[pos-1].tam += add;
-        for(i=0;i<lista[pos-1].tam;i++)
-            lista[pos-1].p[i+add] = NULL;
+        for(i=tamanhoAnterior;i<lista[pos-1].tam;i++){
+            lista[pos-1].p[i] = NULL;
+        }
 
     }
     else
