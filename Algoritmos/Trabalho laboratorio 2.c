@@ -17,7 +17,7 @@ int menu(){
     printf("8 - Sair\n");
     do{
         printf("Digite um das opcao: ");
-        __fpurge(stdin);
+        fflush(stdin);
         gets(op);
          printf("\n ");
     }while(op < 48 && op > 57);
@@ -164,7 +164,7 @@ void ordenar(elemento lista[TAM]){
             }
     for(i=0;i<TAM;i++){
         if(lista[i].tam == 0)
-            printf("Estrutura ainda nao criada\n");
+            printf("Estrutura %d ainda nao criada\n",i);
         else{
             printf("\n ");
             printf(">>>Estrutura %d\n",i+1);
@@ -262,16 +262,20 @@ void excluir(elemento lista[TAM]){
     int x=0;
     int i;
     int j;
+    int tamanho =0;
     printf(">> Informe a posição da estrutura principal: ");
     scanf("%d",&pos);
     printf( "Digite qual numero excluir: ");
     scanf("%d",&numero);
-    for(j=0;j<lista[pos].tam;j++){
-        if(lista[pos].p[j] == numero)
-            x = j;
+    tamanho = lista[pos-1].tam;
+    for(j=0;j<tamanho;j++){
+        if(lista[pos-1].p[j] == numero){
+            lista[pos-1].p[j] = lista[pos-1].p[tamanho - 1];
+            lista[pos-1].p[tamanho - 1] = NULL;
+        }
 }
 }
-void liberar(int* y, elemento lista[TAM]){
+void liberar(elemento lista[TAM]){
     int i;
     //free(y);
     for(i=0;i<TAM;i++){
@@ -303,10 +307,12 @@ int main(){
                  y = criarvetor(&x,y,lista);
                 ordenarVetor(x,y);
                 listarVetor(x,y);
+                 free(y);
                  y = NULL;
                  x = 0;
                 break;
             case 5:
+                excluir(lista);
                 break;
             case 6:
                 break;
@@ -326,3 +332,4 @@ int main(){
     }while(op != 7);
     return 0;
 }
+
