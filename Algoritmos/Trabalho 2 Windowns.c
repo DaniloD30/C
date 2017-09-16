@@ -17,7 +17,7 @@ int menu(){
     printf("8 - Sair\n");
     do{
         printf("Digite um das opcao: ");
-       __fpurge(stdin);
+       fflush(stdin);
         gets(op);
          printf("\n ");
     }while(op < 48 && op > 57);
