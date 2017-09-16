@@ -76,26 +76,29 @@ void criarLista(elemento lista[TAM]){
 
     int pos;
     int i;
-    printf("Digite o numero da posicao que vc deseja inserir: ");
+    printf("Digite o numero da posicao que voce deseja criar uma estrutura: ");
     scanf("%d",&pos);
 
 
+    if(lista[pos-1].tam == 0){
+        printf("Digite o tamanho da estrutura auxiliar: ");
+        scanf("%d",&lista[pos-1].tam);
 
-     printf("Digite o tamanho da estrutura auxiliar: ");
-    scanf("%d",&lista[pos-1].tam);
+        lista[pos-1].p = (int*)malloc(lista[pos-1].tam*sizeof(int));
+        if(lista[pos-1].p)
+            for(i=0;i<lista[pos-1].tam;i++)
+                lista[pos-1].p[i] = NULL;
 
-    lista[pos-1].p = (int*)malloc(lista[pos-1].tam*sizeof(int));
-    if(lista[pos-1].p)
-        for(i=0;i<lista[pos-1].tam;i++)
-            lista[pos-1].p[i] = NULL;
-
-    else{
-            printf("Estrutura nao criada\n");
-            printf("Espaço em memória insuficiente\n");
-            free(lista[pos-1].p);
-            exit(1);
+        else{
+                printf("Estrutura nao criada\n");
+                printf("Espaço em memória insuficiente\n");
+                free(lista[pos-1].p);
+                exit(1);
+        }
+        printf("Estrutura criada com sucesso\n");
     }
-    printf("Estrutura criada com sucesso\n");
+    else
+        printf("Estrutura ja criada anteriormente com %d posicoes\n",lista[pos-1].tam);
 }
 void inserir(elemento lista[TAM]){
     int pos;
@@ -167,8 +170,10 @@ void printar(elemento lista[TAM]){
     int tamanho;
 
     for(i=0;i<TAM;i++){
-        if(lista[i].tam == 0)
+        if(lista[i].tam == 0){
             printf("Estrutura %d ainda nao criada\n",i+1);
+            printf("Escolha a opcao 0 no menu principal para criar uma estrutura\n");
+        }
         else{
             printf("\n ");
             printf(">>>Estrutura %d\n",i+1);
@@ -188,7 +193,7 @@ void ordenar(elemento lista[TAM]){
     //int aux=0;
     //int tamanho=0;
     //int y;
-    //int x=0;
+    int x=0;
     //int menor=0;
     int aux=0;
     int j;
@@ -202,6 +207,7 @@ void ordenar(elemento lista[TAM]){
     scanf("%d",&pos);
 
     if(lista[pos-1].tam != 0 ){
+                x=1;
                 lista[pos-1].auxiliar = (int*)malloc(lista[pos-1].tam*sizeof(int));
                 for(i=0;i< lista[pos-1].tam;i++){
                     if(lista[pos-1].p[i] != NULL){
@@ -224,9 +230,11 @@ void ordenar(elemento lista[TAM]){
                 }
     else{
         printf("Estrutura %d ainda nao criada\n",pos-1);
+        printf("Escolha a opcao 0 no menu principal para criar uma estrutura\n");
+        x = 0;
     }
 
-
+    if(x){
             printf("\n ");
             printf(">>>Estrutura %d\n",pos);
             //printf("Tamanho da estrutura: %d\n",lista[pos-1].tam);
@@ -240,17 +248,18 @@ void ordenar(elemento lista[TAM]){
 
             lista[pos-1].qtd = 0;
 
-
+        }
 
 }
 
 int* criarvetor(int*x,int* y,elemento lista[TAM]){
     int i;
     int j;
-
+    int x = 0;
     int count = 0;
      for(i=0;i<TAM;i++){
         if(lista[i].tam != 0){
+                x=1;
             //if(*ultimo != i){
                 y = (int*)realloc(y,(*x+lista[i].tam)*sizeof(int));
                 //for(i=0;i<lista[i].tam;i++)
@@ -274,6 +283,10 @@ int* criarvetor(int*x,int* y,elemento lista[TAM]){
 
         }
 
+    if(x==0){
+         printf("Nenhuma estrutura criada\n");
+        printf("Escolha a opcao 0 no menu principal para criar uma estrutura\n");
+    }
 
 
      return y;
@@ -307,15 +320,16 @@ void listarVetor(int x,int* y){
     int i;
     //int tamanho;
     //tamanho = criarvetor(lista);
-    for(i = 0;i<x;i++)
-        printf("Elemento: %d\n",y[i]);
+    if(x != 0)
+        for(i = 0;i<x;i++)
+         printf("Elemento: %d\n",y[i]);
 
 }
 
 void excluir(elemento lista[TAM]){
     int pos;
     int numero;
-    //int x=0;
+    int x=0;
 //    int i;
     int j;
     int tamanho =0;
@@ -323,14 +337,18 @@ void excluir(elemento lista[TAM]){
     scanf("%d",&pos);
     printf( "Digite qual numero excluir: ");
     scanf("%d",&numero);
-    tamanho = lista[pos-1].tam;
-    for(j=0;j<tamanho;j++){
-        if(lista[pos-1].p[j] == numero){
-            lista[pos-1].p[j] = lista[pos-1].p[tamanho - 1];
-            lista[pos-1].p[tamanho - 1] = NULL;
-            break;
+    if(lista[pos-1].tam != 0){
+        tamanho = lista[pos-1].tam;
+        for(j=0;j<tamanho;j++){
+            if(lista[pos-1].p[j] == numero){
+                x = 1;
+                lista[pos-1].p[j] = lista[pos-1].p[tamanho - 1];
+                lista[pos-1].p[tamanho - 1] = NULL;
+                break;
+            }
         }
-
+        if(x==0)
+            printf("Numero inexistente na estrutura %d\n",pos);
     }
 }
 void realloca(elemento lista[TAM]){
@@ -370,10 +388,13 @@ int main(){
     elemento lista[TAM];
     inicializarLista(lista);
     do{
+
+
         op = menu();
         switch(op){
             case 0:
                 criarLista(lista);
+
                 break;
             case 1:
              inserir(lista);
@@ -401,8 +422,7 @@ int main(){
                 break;
             case 7:
                 printf("Limpando tela\n");
-                //system("cls");
-                op = menu();
+                system("cls");
                 break;
             case 8:
                 printf("Finalizando o programa\n");
