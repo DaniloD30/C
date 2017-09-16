@@ -171,10 +171,12 @@ void printar(elemento lista[TAM]){
 
     for(i=0;i<TAM;i++){
         if(lista[i].tam == 0){
+
             printf("Estrutura %d ainda nao criada\n",i+1);
-            printf("Escolha a opcao 0 no menu principal para criar uma estrutura\n");
+
         }
         else{
+
             printf("\n ");
             printf(">>>Estrutura %d\n",i+1);
             printf("Tamanho da estrutura: %d\n",lista[i].tam);
@@ -187,6 +189,7 @@ void printar(elemento lista[TAM]){
         }
         }
     }
+
  }
 void ordenar(elemento lista[TAM]){
     int i;
@@ -238,7 +241,7 @@ void ordenar(elemento lista[TAM]){
             printf("\n ");
             printf(">>>Estrutura %d\n",pos);
             //printf("Tamanho da estrutura: %d\n",lista[pos-1].tam);
-            printf("---Elementos Ordenados:\n",pos);
+            printf("---Elementos Ordenados:\n");
             for(j=0;j<lista[pos-1].qtd;j++){
                 /*if(lista[pos-1].auxiliar[j]== NULL)
                     printf("Posicao %d nao preenchida\n",j+1);*/
@@ -255,11 +258,11 @@ void ordenar(elemento lista[TAM]){
 int* criarvetor(int*x,int* y,elemento lista[TAM]){
     int i;
     int j;
-    int x = 0;
+    int z = 0;
     int count = 0;
      for(i=0;i<TAM;i++){
         if(lista[i].tam != 0){
-                x=1;
+                z=1;
             //if(*ultimo != i){
                 y = (int*)realloc(y,(*x+lista[i].tam)*sizeof(int));
                 //for(i=0;i<lista[i].tam;i++)
@@ -283,7 +286,7 @@ int* criarvetor(int*x,int* y,elemento lista[TAM]){
 
         }
 
-    if(x==0){
+    if(z==0){
          printf("Nenhuma estrutura criada\n");
         printf("Escolha a opcao 0 no menu principal para criar uma estrutura\n");
     }
@@ -347,9 +350,10 @@ void excluir(elemento lista[TAM]){
                 break;
             }
         }
-        if(x==0)
-            printf("Numero inexistente na estrutura %d\n",pos);
+
     }
+     if(x==0)
+            printf("Numero inexistente na estrutura %d\n",pos);
 }
 void realloca(elemento lista[TAM]){
     int add;
