@@ -39,29 +39,21 @@ int menu(){
     int* auxiliar;
 
 }elemento;
-/*
-int verificar(char x){
-    int i;
-    int y;
-    int z;
-    for(i=0;x[i]!='\0';i++){
-        if(x[i] < 48 || x[i] > 57)
-            y = 0;
-        else
-            y=1;
-    }
-    if(y = 1)
-        z = atoi(x);
-    else
-        return 0;
 
-    if(z < 1 && z > 10 )
-        return 0;
-    else
-        return 1;
+int verificar(char numero[]){
+    int i;
+    int y=1;
+    int z;
+    for(i=0;numero[i];i++){
+        if(numero[i] < 48 || numero[i] > 57){
+            y = 0;
+            break;
+        }
+       }
+    return y;
 
 }
-*/
+
 void inicializarLista(elemento lista[TAM]){
     int i;
     for (i = 0; i < TAM; i++){
@@ -73,11 +65,33 @@ void inicializarLista(elemento lista[TAM]){
     }
 }
 void criarLista(elemento lista[TAM]){
-
+    char posicao[250];
     int pos;
     int i;
-    printf("Digite o numero da posicao que voce deseja criar uma estrutura: ");
-    scanf("%d",&pos);
+    int posi;
+    int x=0;
+
+    do{
+        printf("Digite o numero da posicao que voce deseja criar uma estrutura: ");
+        gets(posicao);
+        posi = verificar(posicao);
+        if(posi == 1){
+            pos = atoi(posicao);
+            if(pos < 1 || pos > 10){
+                x = 0;
+                printf(">> Digite uma posicao entre os numeros 1 e 10\n");
+                printf(">> Posicao Invalida\n");
+            }
+            else
+                x = 1;
+        }
+        else{
+            printf(">> Posicao Invalida\n");
+            x = 0;
+        }
+
+    }while(x == 0);
+
 
 
     if(lista[pos-1].tam == 0){
@@ -100,14 +114,37 @@ void criarLista(elemento lista[TAM]){
     else
         printf("Estrutura ja criada anteriormente com %d posicoes\n",lista[pos-1].tam);
 }
+
 void inserir(elemento lista[TAM]){
     int pos;
+    char posicao[250];
+    int posi;
     int i;
     int numero;
     int x=0;
+    int z=0;
 
-        printf("Digite o numero da posicao que vc deseja inserir: ");
-        scanf("%d",&pos);
+        do{
+            printf("Digite o numero da posicao que voce deseja inserir um elemento na estrutura: ");
+            gets(posicao);
+            posi = verificar(posicao);
+            if(posi == 1){
+                pos = atoi(posicao);
+                if(pos < 1 || pos > 10){
+                    z = 0;
+                    printf(">> Digite uma posicao entre os numeros 1 e 10\n");
+                    printf(">> Posicao Invalida\n");
+                }
+                else
+                    z = 1;
+            }
+            else{
+                printf(">> Posicao Invalida\n");
+                z = 0;
+            }
+
+    }while(z == 0);
+
 
 
     if(lista[pos-1].tam != 0){
@@ -206,8 +243,30 @@ void ordenar(elemento lista[TAM]){
         //int tamanho;
         //int auxiliar[t];
     int pos;
-    printf("Digite a posicao que voce deseja ordenar: ");
-    scanf("%d",&pos);
+    int posi;
+    char posicao[250];
+    int z=0;
+
+     do{
+            printf("Digite a posicao que voce deseja ordenar: ");
+            gets(posicao);
+            posi = verificar(posicao);
+            if(posi == 1){
+                pos = atoi(posicao);
+                if(pos < 1 || pos > 10){
+                    z = 0;
+                    printf(">> Digite uma posicao entre os numeros 1 e 10\n");
+                    printf(">> Posicao Invalida\n");
+                }
+                else
+                    z = 1;
+            }
+            else{
+                printf(">> Posicao Invalida\n");
+                z = 0;
+            }
+
+    }while(z == 0);
 
     if(lista[pos-1].tam != 0 ){
                 x=1;
@@ -232,7 +291,7 @@ void ordenar(elemento lista[TAM]){
 
                 }
     else{
-        printf("Estrutura %d ainda nao criada\n",pos-1);
+        printf("Estrutura %d ainda nao criada\n",pos);
         printf("Escolha a opcao 0 no menu principal para criar uma estrutura\n");
         x = 0;
     }
@@ -331,15 +390,38 @@ void listarVetor(int x,int* y){
 
 void excluir(elemento lista[TAM]){
     int pos;
+    int posi;
+    char posicao[250];
     int numero;
     int x=0;
 //    int i;
     int j;
     int tamanho =0;
-    printf(">> Informe a posicao da estrutura principal: ");
-    scanf("%d",&pos);
+    int z=0;
+    do{
+            printf(">> Informe a posicao da estrutura principal: ");
+            gets(posicao);
+            posi = verificar(posicao);
+            if(posi == 1){
+                pos = atoi(posicao);
+                if(pos < 1 || pos > 10){
+                    z = 0;
+                    printf(">> Digite uma posicao entre os numeros 1 e 10\n");
+                    printf(">> Posicao Invalida\n");
+                }
+                else
+                    z = 1;
+            }
+            else{
+                printf(">> Posicao Invalida\n");
+                z = 0;
+            }
+
+    }while(z == 0);
+
     printf( "Digite qual numero excluir: ");
     scanf("%d",&numero);
+
     if(lista[pos-1].tam != 0){
         tamanho = lista[pos-1].tam;
         for(j=0;j<tamanho;j++){
@@ -358,10 +440,32 @@ void excluir(elemento lista[TAM]){
 void realloca(elemento lista[TAM]){
     int add;
     int pos;
+    int posi;
+    char posicao[250];
     int i;
     int tamanhoAnterior =0;
-    printf("Informe a posicao da estrutura principal que voce deseja aumentar o tamanho: ");
-    scanf("%d",&pos);
+    int z=0;
+   do{
+            printf("Informe a posicao da estrutura principal que voce deseja aumentar o tamanho: ");
+            gets(posicao);
+            posi = verificar(posicao);
+            if(posi == 1){
+                pos = atoi(posicao);
+                if(pos < 1 || pos > 10){
+                    z = 0;
+                    printf(">> Digite uma posicao entre os numeros 1 e 10\n");
+                    printf(">> Posicao Invalida\n");
+                }
+                else
+                    z = 1;
+            }
+            else{
+                printf(">> Posicao Invalida\n");
+                z = 0;
+            }
+
+    }while(z == 0);
+
     printf("Digite o numero de inteiros extras a entrarem na estrutura: ");
     scanf("%d",&add);
     if(lista[pos-1].tam != 0){
