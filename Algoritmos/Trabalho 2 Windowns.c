@@ -73,7 +73,9 @@ int verificar(char numero[]){
         printf("Posicao invalida\n");
         return -1;
     }
+
 }
+
 int verificarNumeroInserido(char numero[]){
     int i;
     int y=1;
@@ -127,9 +129,10 @@ void inicializarLista(elemento lista[TAM]){
 void criarLista(elemento lista[TAM]){
     char posicao[250];
     int pos;
-    int i;
+
     char tamanho[250];
     int y=0;
+
     do{
         printf("Digite o numero da posicao que voce deseja criar uma estrutura: ");
         gets(posicao);
@@ -165,11 +168,12 @@ void criarLista(elemento lista[TAM]){
 void inserir(elemento lista[TAM]){
     int pos;
     char posicao[250];
-    int i;
+
     int numero;
     int y=0;
     char n[250];
-    int x=0;
+
+
         do{
             printf("Digite o numero da posicao que voce deseja inserir um elemento na estrutura: ");
             gets(posicao);
@@ -193,6 +197,7 @@ void inserir(elemento lista[TAM]){
                 //if(lista[pos-1].p[i] == NULL){
                 //if(lista[pos-1].guardarposicao !=  i){
         else{
+
             lista[pos-1].p[lista[pos-1].qtd] = numero;
             lista[pos-1].qtd++;
                     //x=1;
@@ -232,11 +237,54 @@ void printar(elemento lista[TAM]){
     }
 
  }
-void ordenar(elemento lista[TAM]){
+ void copiandoVetor(int pos,elemento lista[TAM]){
     int i;
-    int x=0;
-    int aux=0;
+
+    lista[pos-1].auxiliar = (int*)malloc(lista[pos-1].tam*sizeof(int));
+
+    if(lista[pos-1].auxiliar)
+        for(i=0;i< lista[pos-1].qtd;i++){
+                   lista[pos-1].auxiliar[i] = lista[pos-1].p[i];
+        }
+    else{
+        printf("Espaço em memória insuficiente\n");
+        free(lista[pos-1].auxiliar);
+    }
+
+
+ }
+ void ordenandoTemporariamente(int pos,elemento lista[TAM]){
+    int i;
     int j;
+    int aux;
+
+    for(i=lista[pos-1].qtd-1;i>=1;i--){
+        for(j=0;j<i;j++)
+            if(lista[pos-1].auxiliar[j]>lista[pos-1].auxiliar[j+1]){
+                aux = lista[pos-1].auxiliar[j];
+                lista[pos-1].auxiliar[j] = lista[pos-1].auxiliar[j+1];
+                lista[pos-1].auxiliar[j+1] = aux;
+            }
+
+    }
+
+ }
+ void ListarOrdenadoTemporario(int pos,elemento lista[TAM]){
+
+     int j;
+     printf("\n ");
+    printf(">>>Estrutura %d\n",pos);
+    printf("---Elementos Ordenados:\n");
+    for(j=0;j<lista[pos-1].qtd;j++){
+        printf("Elemento: %d\n",lista[pos-1].auxiliar[j]);
+    }
+
+ }
+void ordenar(elemento lista[TAM]){
+
+    int x=0;
+
+
     int pos;
     char posicao[250];
 
@@ -249,11 +297,14 @@ void ordenar(elemento lista[TAM]){
 
     if(lista[pos-1].tam != 0 ){
                 x=1;
+                copiandoVetor(pos,lista);
+                /*
                 lista[pos-1].auxiliar = (int*)malloc(lista[pos-1].tam*sizeof(int));
                 for(i=0;i< lista[pos-1].qtd;i++){
                    lista[pos-1].auxiliar[i] = lista[pos-1].p[i];
-                }
-
+                }*/
+                ordenandoTemporariamente(pos,lista);
+                /*
                 for(i=lista[pos-1].qtd-1;i>=1;i--){
                     for(j=0;j<i;j++)
                         if(lista[pos-1].auxiliar[j]>lista[pos-1].auxiliar[j+1]){
@@ -262,7 +313,7 @@ void ordenar(elemento lista[TAM]){
                             lista[pos-1].auxiliar[j+1] = aux;
                         }
 
-                }
+                }*/
 
     }
     else{
@@ -272,16 +323,15 @@ void ordenar(elemento lista[TAM]){
     }
 
     if(x){
+         ListarOrdenadoTemporario(pos,lista);
+            /*
             printf("\n ");
             printf(">>>Estrutura %d\n",pos);
 
             printf("---Elementos Ordenados:\n");
             for(j=0;j<lista[pos-1].qtd;j++){
                printf("Elemento: %d\n",lista[pos-1].auxiliar[j]);
-            }
-
-
-
+            }*/
     }
 
 }
@@ -397,14 +447,15 @@ void realloca(elemento lista[TAM]){
     int y=0;
     char adicionar[250];
     char posicao[250];
-    int i;
-    int tamanhoAnterior =0;
+
+
 
    do{
         printf("Informe a posicao da estrutura principal que voce deseja aumentar o tamanho: ");
         gets(posicao);
         pos = verificar(posicao);
    }while(pos < 1 || pos > 10);
+
     do{
         printf("Digite o numero de inteiros extras a entrarem na estrutura: ");
         gets(adicionar);
