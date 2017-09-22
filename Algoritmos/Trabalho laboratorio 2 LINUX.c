@@ -17,13 +17,14 @@ int menu(){
     printf("4 - Listar todos os numeros de forma ordenada\n");
     printf("5 - Excluir um elemento\n");
     printf("6 - Aumentar o tamanho de uma estrutura auxiliar\n");
-    printf("7 - Limpar tela\n");
-    printf("8 - Sair\n");
+    printf("7 - Sair\n");
+    
 
     do{
         printf("Digite um das opcao: ");
         fflush(stdin);
-        gets(op);
+        //gets(op);
+        fgets( op, 250, stdin );
         printf("\n ");
         for(i=0;op[i];i++){
             if(op[i] < 48 || op[i] > 57){
@@ -136,14 +137,16 @@ void criarLista(elemento lista[TAM]){
 
     do{
         printf("Digite o numero da posicao que voce deseja criar uma estrutura: ");
-        gets(posicao);
+        //gets(posicao);
+        fgets( posicao, 250, stdin );
         pos = verificar(posicao);
     }while(pos < 1 || pos > 10);
 
     if(lista[pos-1].tam == 0){
         do{
             printf("Digite o tamanho da estrutura auxiliar: ");
-            gets(tamanho);
+            //gets(tamanho);
+            fgets( tamanho, 250, stdin );
             y = verificarNumero(tamanho);
             if(y)
                 lista[pos-1].tam = atoi(tamanho);
@@ -177,7 +180,8 @@ void inserir(elemento lista[TAM]){
 
         do{
             printf("Digite o numero da posicao que voce deseja inserir um elemento na estrutura: ");
-            gets(posicao);
+            //gets(posicao);
+            fgets( posicao, 250, stdin );
             pos = verificar(posicao);
         }while(pos < 1 || pos > 10);
 
@@ -185,7 +189,8 @@ void inserir(elemento lista[TAM]){
     if(lista[pos-1].tam != 0){
         do{
             printf("Digite o elemento que vc deseja inserir na estrutura: ");
-            gets(n);
+            //gets(n);
+            fgets( n, 250, stdin );
             y = verificarNumeroInserido(n);
             if(y)
                 numero = atoi(n);
@@ -292,7 +297,8 @@ void ordenar(elemento lista[TAM]){
 
      do{
             printf("Digite a posicao que voce deseja ordenar: ");
-            gets(posicao);
+            //gets(posicao);
+            fgets( posicao, 250, stdin );
             pos = verificar(posicao);
      }while(pos < 1 || pos > 10);
 
@@ -411,13 +417,15 @@ void excluir(elemento lista[TAM]){
 
     do{
             printf(">> Informe a posicao da estrutura principal: ");
-            gets(posicao);
+            //gets(posicao);
+            fgets( posicao, 250, stdin );
             pos = verificar(posicao);
     }while(pos < 1 || pos > 10);
 
     do{
         printf( "Digite qual numero excluir: ");
-        gets(number);
+        //gets(number);
+        fgets( number, 250, stdin );
         y = verificarNumero(number);
         if(y)
             numero = atoi(number);
@@ -453,13 +461,15 @@ void realloca(elemento lista[TAM]){
 
    do{
         printf("Informe a posicao da estrutura principal que voce deseja aumentar o tamanho: ");
-        gets(posicao);
+        //gets(posicao);
+        fgets( posicao, 250, stdin );
         pos = verificar(posicao);
    }while(pos < 1 || pos > 10);
 
     do{
         printf("Digite o numero de inteiros extras a entrarem na estrutura: ");
-        gets(adicionar);
+        //gets(adicionar);
+        fgets( adicionar, 250, stdin );
         y = verificarNumero(adicionar);
         if(y){
             add = atoi(adicionar);
@@ -541,10 +551,6 @@ int main(){
                 realloca(lista);
                 break;
             case 7:
-                printf("Limpando tela\n");
-                system("cls");
-                break;
-            case 8:
                 printf("Finalizando o programa\n");
                 liberar(lista);
                 return 0;
