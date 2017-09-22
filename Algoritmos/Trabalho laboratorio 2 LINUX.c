@@ -147,7 +147,6 @@ void inicializarLista(elemento lista[TAM]){
 void criarLista(elemento lista[TAM]){
     char posicao[250];
     int pos;
-
     char tamanho[250];
     int y=0;
 
@@ -214,18 +213,14 @@ void inserir(elemento lista[TAM]){
 
          if(lista[pos-1].qtd == lista[pos-1].tam )
                 printf("---------------- Estrutura com todas as posicoes preenchidas----------------\n");
-            //x=0;
-            //for(i=0;i<lista[pos-1].tam;i++){
-                //if(lista[pos-1].p[i] == NULL){
-                //if(lista[pos-1].guardarposicao !=  i){
+
         else{
 
             lista[pos-1].p[lista[pos-1].qtd] = numero;
             lista[pos-1].qtd++;
-                    //x=1;
+
             printf("Numero Inserido com Sucesso na posicao %d\n", lista[pos-1].qtd);
-                    //lista[pos-1].guardarposicao = i;
-                    //break;
+
         }
 
 
@@ -321,23 +316,7 @@ void ordenar(elemento lista[TAM]){
     if(lista[pos-1].tam != 0 ){
                 x=1;
                 copiandoVetor(pos,lista);
-                /*
-                lista[pos-1].auxiliar = (int*)malloc(lista[pos-1].tam*sizeof(int));
-                for(i=0;i< lista[pos-1].qtd;i++){
-                   lista[pos-1].auxiliar[i] = lista[pos-1].p[i];
-                }*/
                 ordenandoTemporariamente(pos,lista);
-                /*
-                for(i=lista[pos-1].qtd-1;i>=1;i--){
-                    for(j=0;j<i;j++)
-                        if(lista[pos-1].auxiliar[j]>lista[pos-1].auxiliar[j+1]){
-                            aux = lista[pos-1].auxiliar[j];
-                            lista[pos-1].auxiliar[j] = lista[pos-1].auxiliar[j+1];
-                            lista[pos-1].auxiliar[j+1] = aux;
-                        }
-
-                }*/
-
     }
     else{
         printf(">> Estrutura %d ainda nao criada\n",pos);
@@ -347,14 +326,6 @@ void ordenar(elemento lista[TAM]){
 
     if(x){
          ListarOrdenadoTemporario(pos,lista);
-            /*
-            printf("\n ");
-            printf(">>>Estrutura %d\n",pos);
-
-            printf("---Elementos Ordenados:\n");
-            for(j=0;j<lista[pos-1].qtd;j++){
-               printf("Elemento: %d\n",lista[pos-1].auxiliar[j]);
-            }*/
     }
 
 }
@@ -363,16 +334,13 @@ int* criarvetor(int*x,int* y,elemento lista[TAM]){
     int i;
     int j;
     int z = 0;
-
-     for(i=0;i<TAM;i++){
+    for(i=0;i<TAM;i++){
         if(lista[i].tam != 0 ){
             z=1;
             if(lista[i].qtd != 0){
-
                 y = (int*)realloc(y,(*x+lista[i].qtd)*sizeof(int));
                 for(j=0;j< lista[i].qtd;j++){
                       y[*x + j] = lista[i].p[j];
-
                 }
                 *x+=lista[i].qtd;
             }
@@ -474,9 +442,7 @@ void realloca(elemento lista[TAM]){
     char adicionar[250];
     char posicao[250];
 
-
-
-   do{
+    do{
         printf("Informe a posicao da estrutura principal que voce deseja aumentar o tamanho: ");
         gets(posicao);
         //fgets( posicao, 250, stdin );
@@ -504,9 +470,7 @@ void realloca(elemento lista[TAM]){
         //tamanhoAnterior = lista[pos-1].tam;
         lista[pos-1].p = (int*)realloc(lista[pos-1].p,(add+lista[pos-1].tam)*sizeof(int));
         lista[pos-1].tam += add;
-        /*for(i=tamanhoAnterior;i<lista[pos-1].tam;i++){
-            lista[pos-1].p[i] = NULL;
-        }*/
+
         printf(">> Estrutura auxiliar aumentada com sucesso\n");
     }
     else
@@ -532,7 +496,6 @@ void limpatela(){
 int main(){
     int op;
     int x = 0;
-
     int* y = NULL;
     elemento lista[TAM];
     inicializarLista(lista);
@@ -542,7 +505,6 @@ int main(){
         switch(op){
             case 0:
                 criarLista(lista);
-
                 break;
             case 1:
              inserir(lista);
