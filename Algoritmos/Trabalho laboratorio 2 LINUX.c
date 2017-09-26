@@ -1,9 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
-//#include<string.h>
 #define TAM 10
 void limpatela();
-// LIMPAR O BUFFER NAS PRINCIPAIS FUNÇÕES    __fpurge(stdin}  fflsuh(stdin)
+
 int menu(){
     char op[250];
     int opcao;
@@ -398,7 +397,7 @@ void excluir(elemento lista[TAM]){
     int x=0;
     int y=0;
     int j;
-    int tamanho =0;
+    int tamanho =0, aux = 0;
 
     do{
             printf(">> Informe a posicao da estrutura principal: ");
@@ -423,8 +422,20 @@ void excluir(elemento lista[TAM]){
         for(j=0;j<tamanho;j++){
             if(lista[pos-1].p[j] == numero){
                 x = 1;
-                lista[pos-1].p[j] = lista[pos-1].p[tamanho - 1];
-                lista[pos-1].qtd--;
+               if(j == tamanho - 1)
+                    lista[pos-1].qtd--;
+               else{
+                    while(j != tamanho){
+                        aux = lista[pos-1].p[j];
+                        lista[pos-1].p[j] = lista[pos-1].p[j+1];
+                        lista[pos-1].p[j+1] = aux;
+                        j++;
+                    }
+
+                    lista[pos-1].qtd--;
+               }
+                //lista[pos-1].p[j] = lista[pos-1].p[tamanho - 1];
+                //lista[pos-1].qtd--;
                 //lista[pos-1].p[tamanho - 1] = NULL;
                 printf(">> Numero excluido com sucesso\n");
                 break;
