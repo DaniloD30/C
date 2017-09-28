@@ -214,7 +214,9 @@ void inserir(elemento lista[TAM]){
     if(lista[pos-1].tam != 0){
         do{
             printf("Digite o elemento que vc deseja inserir na estrutura: ");
-            gets(n);
+            //gets(n);
+            scanf("%s",&n);
+             fflush(stdin);
             //fgets( n, 250, stdin );
             y = verificarNumeroInserido(n);
             if(y)
