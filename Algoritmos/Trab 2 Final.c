@@ -35,7 +35,7 @@ int menu(){
         for(i=0;op[i];i++){
             if(op[i] < 48 || op[i] > 57){
                 y = 0;
-                limpatela();
+                //limpatela();
                 break;
             }
             else
@@ -216,7 +216,7 @@ void inserir(elemento lista[TAM]){
             printf("Digite o elemento que vc deseja inserir na estrutura: ");
             //gets(n);
             scanf("%s",&n);
-             fflush(stdin);
+            fflush(stdin);
             //fgets( n, 250, stdin );
             y = verificarNumeroInserido(n);
             if(y)
