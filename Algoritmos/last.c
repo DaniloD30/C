@@ -4,7 +4,7 @@
 #include <string.h>
 #define TAM 10
 int testarArquivo(FILE *arquivo);
-/*
+
 void limpatela(){
     //printf("\nPressione enter para continuar...\n");
     //system("read x");
@@ -14,13 +14,13 @@ void limpatela(){
         system("clear");
     #endif
 }
-*/
+
 int menu(){
     char op[250];
     int opcao;
     int i;
     int y = 1;
-    //limpatela();
+    limpatela();
     printf("-----------------------------------------\n");
     printf("----------------- Menu ------------------\n");
     printf("0 - Criar estrutura\n");
@@ -584,7 +584,7 @@ inteiro converteASCII(char* string){
 	num.num = num.num * sinal;
 	return num;
 }
-// Converte Posição, máximo e atual
+// Converte Posição, tamanho e quantidade de elementos
 int convertePMA(char* pos, char* max, char* atual, inteiro* pma){
     int x;
 	*(pma) = converteASCII(pos);
@@ -784,7 +784,7 @@ int main(){
     FILE* arquivo;
     elemento lista[TAM];
     inicializarLista(lista);
-    printf("\nDeseja carregar os ultimos dados salvos? 0 -> SIM | 1 -> NAO: ");
+    printf("\nDeseja carregar os ultimos dados salvos? 1 -> SIM | 0 -> NAO: ");
 	op = trataEntrada();
 	if(op){
 		ler = lerDados(lista,arquivo);
@@ -797,13 +797,15 @@ int main(){
 	}
     do{
         op = menu();
-        //limpatela();
+       	limpatela();
         switch(op){
             case 0:
                 criarLista(lista);
+                 Escrever(lista,arquivo);
                 break;
             case 1:
                 inserir(lista);
+                 Escrever(lista,arquivo);
                 break;
             case 2:
                 printar(lista);
@@ -821,9 +823,11 @@ int main(){
                 break;
             case 5:
                 excluir(lista);
+                 Escrever(lista,arquivo);
                 break;
             case 6:
                 realloca(lista);
+                 Escrever(lista,arquivo);
                 break;
             case 7:
                 printf("Finalizando o programa\n");
