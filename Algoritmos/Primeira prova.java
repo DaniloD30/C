@@ -47,29 +47,68 @@ package provai;
 public class Gene {
     private int estado;
     
-    public void alterar(int estado){
+    
+    public Gene(int estado){
         this.setEstado(estado);
     }
-    public int ler(){
-        return this.getEstado();
+    public boolean equals(Gene outro){
+        return (this.getEstado() == outro.getEstado());
+     }
+    public Gene clonar(){
+        Gene clone = new Gene(0);
+        clone.setEstado(this.getEstado());
+        return clone;
     }
     
-    private int getEstado(){
+    //METODOS ACESSORES
+
+    private int getEstado() {
         return estado;
     }
-
+    
     private void setEstado(int estado) {
         this.estado = estado;
     }
-       public boolean equals(Gene g){
-        return (this.getEstado() == g.ler());
-     }
-    public Gene clonar(){
-        Gene n = new Gene();
-        n.alterar(this.ler());
-       
-        return n;
+    
+    
+    
+}
+
+_____ CLASSE 2 ___________
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package prova.i.pkg2017.pkg1;
+
+/**
+ *
+ * @author Aluno
+ */
+public class Cromossomo {
+    private int numeroGene;
+    private int numeroQueRecebeCromo;
+    
+    public Cromossomo(int numeroGene){
+        this.setNumeroGene(numeroGene);
+        Cromossomo vet[] = new Cromossomo[numeroGene];
+    }
+    public int buscar(int alelo){
+        if(vet[alelo] != null){
+            return 
+        }
+    }
+    
+    private int getNumeroGene() {
+        return numeroGene;
+    }
+
+    private void setNumeroGene(int numeroGene) {
+        this.numeroGene = numeroGene;
     }
     
     
 }
+
