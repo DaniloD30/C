@@ -93,11 +93,11 @@ public class Cromossomo {
     
     public Cromossomo(int numeroGene){
         this.setNumeroGene(numeroGene);
-        Cromossomo vet[] = new Cromossomo[numeroGene];
+        Gene vet[] = new Gene[numeroGene];
     }
     public int buscar(int alelo){
-        if(vet[alelo] != null){
-            return 
+        if(this.vet[alelo] != null){
+            return this.vet[alelo]; 
         }
     }
     
