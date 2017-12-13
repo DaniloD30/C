@@ -135,7 +135,7 @@ public class Cromossomo {
                 this.setSoma(this.getSoma());
        }
      }
-     return this.getSoma();
+     return this.getSoma()/this.Genes.lenght;
    }
         
     
