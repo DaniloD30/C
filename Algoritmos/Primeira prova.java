@@ -108,8 +108,8 @@ public class Cromossomo {
         //this.setNumeroGene(numeroGene);
         
     }
-    public int buscar(int alelo){
-        return this.Genes[alelo].ler();
+    public Gene buscar(int alelo){
+        return this.Genes[alelo];
     }
     @Override
     public Cromossomo[] clone(){
