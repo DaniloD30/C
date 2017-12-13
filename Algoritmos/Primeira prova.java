@@ -122,6 +122,16 @@ public class Cromossomo {
          return n;
             
     }
+    
+    ______________________________
+        public Cromossomo clonar(){
+       Cromossomo clone = new Cromossomo(this.tamanho);
+       for(int i=0;i< this.tamanho; i++){
+           clone.genes[i].setEstado(this.genes[i].clonar());
+        }
+       return clone;
+   }
+    _________________________________
     public int percentual(Gene outro[]){
       if( this.Genes.length == outro.length){
        for(int i=0;i< Genes.length; i++){
