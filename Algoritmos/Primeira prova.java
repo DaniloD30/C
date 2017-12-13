@@ -89,17 +89,55 @@ package prova.i.pkg2017.pkg1;
  */
 public class Cromossomo {
     private int numeroGene;
-    private int numeroQueRecebeCromo;
+    private int soma;
+
+    public int getSoma() {
+        return soma;
+    }
+
+    public void setSoma(int soma) {
+        this.soma = soma;
+    }
     
-    public Cromossomo(int numeroGene){
-        this.setNumeroGene(numeroGene);
-        Gene vet[] = new Gene[numeroGene];
+    public Gene[] Genes ;
+    
+    
+    
+    public Cromossomo(int numeroGene) {
+        this.Genes = new Gene[numeroGene];
+        //this.setNumeroGene(numeroGene);
+        
     }
     public int buscar(int alelo){
-        if(this.vet[alelo] != null){
-            return this.vet[alelo]; 
-        }
+        return this.Genes[alelo].ler();
     }
+    @Override
+    public Cromossomo[] clone(){
+        Cromossomo[] n;
+        n = new Cromossomo[this.Genes.length];
+        for(int i=0; i < Genes.length; i++){
+            n[i].Genes[i].alterar(this.Genes[i].ler());
+        }
+            
+         return n;
+            
+    }
+    public int percentual(Gene outro[]){
+      if( this.Genes.length == outro.length){
+       for(int i=0;i< Genes.length; i++){
+            if( this.Genes[i].ler() == outro[i].ler())
+               this.setSoma(this.getSoma() + 1);
+            if(this.Genes[i].ler() != outro[i].ler())
+                this.setSoma(this.getSoma() - 1);
+            if(this.Genes[i] == null || outro[i] == null)
+                this.setSoma(this.getSoma() - 2);
+            if(this.Genes[i] == null && outro[i] == null)
+                this.setSoma(this.getSoma());
+       }
+     }
+     return this.getSoma();
+   }
+        
     
     private int getNumeroGene() {
         return numeroGene;
@@ -108,6 +146,11 @@ public class Cromossomo {
     private void setNumeroGene(int numeroGene) {
         this.numeroGene = numeroGene;
     }
+    
+    
+    
+}
+
     
     
 }
