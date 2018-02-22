@@ -1,0 +1,170 @@
+create table editora (
+   cod_editora int,
+   descricao varchar (30),
+   endereco varchar (30),
+   constraint pk_editora primary key (cod_editora)
+);
+
+create table autor (
+   cod_autor int,
+   nome varchar (45),
+   sexo char(1),
+   data_nascimento date,
+   constraint pk_autor primary key (cod_autor)
+);   
+
+create table livro (
+   cod_livro int,
+   isbn varchar (20),
+   titulo varchar (45),
+   num_edicao int,
+   preco float,
+   cod_editora int,
+   constraint pk_livro primary key (cod_livro),
+   constraint fk_livro_autor foreign key (cod_editora)
+          references editora (cod_editora)
+); 
+
+create table livro_autor (
+   cod_livro int,
+   cod_autor int,
+   constraint pk_livro_autor primary key (cod_livro, cod_autor),
+   constraint fk_livro_autor_livro foreign key (cod_livro)
+        references livro (cod_livro),
+   constraint fk_livro_autor_autor foreign key (cod_autor)
+        references autor (cod_autor)
+);     
+
+insert into editora (cod_editora, descricao, endereco)
+    values (1,'campus','rua do timbo'), 
+           (2,'abril', null),
+           (3,'editora teste',null);
+
+insert into livro 
+    (cod_livro, isbn, titulo, num_edicao, preco, cod_editora)
+    values (1,'12345', 'banco de dados', 3, 70.00,1),
+           (2,'35790','SGBD',1, 85.00, 2),
+           (3,'98765','Redes de Computadores',2, 80.00,2); 
+
+insert into autor (cod_autor, nome, sexo, data_nascimento)
+    values (1,'Joao','M','1970/01/01'),
+           (2,'Maria','F','1974/05/17'),
+           (3,'José','M','1977/10/10'),
+           (4,'Carla','F','1964/12/08'); 
+
+insert into livro_autor (cod_livro, cod_autor)
+    values (1,1), (1,2), (2,2), (2,4), (3,3);
+
+--1. Atualizar o endereço da Editora Campus para ‘Av. ACM’
+
+update editora
+  set endereco = 'Av. ACM'
+where cod_editora = 1;
+
+--2. Atualizar os preços dos livros em 10%
+
+update livro
+  set preco = preco * 1.1;
+
+--3. Excluir a ‘Editora Teste’
+
+delete from editora
+  where cod_editora = 3;
+
+--4. Apresentar o nome e data de nascimento de todos os autores
+
+select nome, data_nascimento
+from autor;
+
+--5. Apresentar o nome e a data de nascimento dos autores por ordem de nome.
+
+select nome, data_nascimento
+from autor
+order by nome;
+
+--6. Apresentar o nome e a data de nascimento dos autores do sexo feminino
+--ordenados pelo nome.
+
+select nome, data_nascimento
+from autor
+where sexo = 'F'
+order by nome;
+
+--7. Apresentar o nome das editoras que não tem o endereço cadastrado.
+
+select descricao
+from editora
+where endereco is null;
+
+--8. Apresentar o título do livro e o nome da sua editora
+
+select l.titulo, e.descricao 
+from livro as l inner join editora as e
+     on (l.cod_editora = e.cod_editora)
+
+select l.titulo, e.descricao
+from livro as l, editora as e
+where l.cod_editora = e.cod_editora     
+
+9. Apresentar o título do livro e o nome da sua editora. Caso haja alguma
+editora sem livro publicado, informar os dados da editora com valores
+nulos para os livros.
+
+select l.titulo, e.descricao
+from editora as e left join livro as l
+	on(e.cod_editora = l.cod_editora)
+	
+10. Apresentar o título do livro e o nome dos seus autores
+select l.titulo, a.nome
+from livro as l inner join livro_autor as la
+	on(l.cod_livro = la.cod_livro)
+	inner join autor as a
+	on(la.cod_autor = a.cod_autor)
+	
+11. Apresentar o nome da editora e o nome dos autores que já publicaram
+algum livro na editora.
+select e.descricao, a.nome
+from editora as e inner join livro as l
+	on(e.cod_editora = l.cod_editora)
+	inner join livro_autor as la
+	on (l.cod_livro = la.cod_livro)
+	inner join autor as a
+	on (la.cod_autor = a.cod_autor)
+
+
+12. Apresentar o título dos livros que começam a string ‘Banco’.
+
+select l.titulo
+from livro as l
+where l.titulo like 'banco%'
+
+
+
+
+13. Apresentar o título dos livros que tem a string ‘do’.
+select l.titulo
+from livro as l
+where l.titulo like '%do%'
+14. Apresentar o nome de cada livro e seu preço reajustado em 5%
+select l.titulo, l.preco*1.05 as preco
+from livro as l
+15. Apresentar o nome dos autores que nasceram no mês de outubro
+select a.nome
+from autor as a
+where extract (month from a.data_nascimento) = 10
+16. Apresentar o número de livros do acervo
+17. Apresentar o número de autores do livro ‘Banco de Dados’
+18. Apresentar o somatório dos preços dos livros do acervo
+19. Apresentar a média de preços dos livros da editora Campus
+20. Apresentar o maior preço dentre todos os livros do acervo.
+21. Apresentar a data de nascimento do autor mais velho
+22. Apresentar o número de livros por editora
+23. Apresentar o somatório e média de preço dos livros por editora
+24. Apresentar o número de autores por livro, mas apenas dos livros que
+possuem mais de 1 autor
+25. Apresentar a média de preços geral por editora, mas apenas as editoras que
+possuem média maior que R$ 80,00
+26. Apresentar o nome dos autores que não são autores do livro Banco de
+Dados
+27. Apresentar a quantidade de livros da editora Campus e Abril em colunas
+diferentes.
