@@ -19,22 +19,22 @@ public class CarteiraDeInvestimentos  {
 		aplicacaoPrimaria.add(a);
 	}
 	
-	public float getEstimativaDeRisco() {
-		float risco = 0;
+	public double getEstimativaDeRisco() {
+		double risco = 0;
 		for(int i = 0; i < aplicacaoPrimaria.size(); i++) {
 			Aplicacoes ap = aplicacaoPrimaria.get(i); // sem casting!
 			risco += ap.getEstimativaDeRisco() * ap.getFatia();
 		}
-		return risco;
+		return risco/100;
 	}
-	public float getEstimativaDeRendimento() {
-		float rendimento = 0;
+	public double getEstimativaDeRendimento() {
+		double rendimento = 0;
 		for(int i = 0; i < aplicacaoPrimaria.size(); i++) {
 			Aplicacoes ap = aplicacaoPrimaria.get(i); // sem casting!
 			rendimento += ap.getEstimativaDeRendimento() * ap.getFatia();
 		}
 		
-		return rendimento;
+		return rendimento/100;
 		
 	}
 	
