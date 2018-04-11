@@ -4,14 +4,14 @@ public abstract class Aplicacoes {
 	
 	private String codigo;
 	private String descricao;
-	private float estimativaDeRisco;
-	private float estimativaDeRendimento;
-	private float fatia;
-	private float valorMinimo;
+	private double estimativaDeRisco;
+	private double estimativaDeRendimento;
+	private double fatia;
+	private double valorMinimo;
 	
 	
-	public Aplicacoes(String codigo, String descricao, float estimativaDeRisco, float estimativaDeRendimento,
-			float fatia, float valorMinimo) {
+	public Aplicacoes(String codigo, String descricao, double estimativaDeRisco, double estimativaDeRendimento,
+			double fatia, double valorMinimo) {
 		super();
 		this.codigo = codigo;
 		this.descricao = descricao;
@@ -20,25 +20,25 @@ public abstract class Aplicacoes {
 		this.fatia = fatia;
 		this.valorMinimo = valorMinimo;
 	}
-	public float getValorMinimo() {
+	public double getValorMinimo() {
 		return valorMinimo;
 	}
 	public void setValorMinimo(float valorMinimo) {
 		this.valorMinimo = valorMinimo;
 	}
-	public float getFatia() {
+	public double getFatia() {
 		return fatia;
 	}
 	public void setFatia(float fatia) {
 		this.fatia = fatia;
 	}
-	public float getEstimativaDeRisco() {
+	public double getEstimativaDeRisco() {
 		return estimativaDeRisco;
 	}
 	public void setEstimativaDeRisco(float r) {
 		this.estimativaDeRisco = r;
 	}
-	public float getEstimativaDeRendimento(){
+	public double getEstimativaDeRendimento(){
 		return estimativaDeRendimento;
 	}
 	public void setEstimativaDeRendimento(float r) {
