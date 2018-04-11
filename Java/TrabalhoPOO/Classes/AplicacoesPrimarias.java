@@ -7,5 +7,11 @@ public class AplicacoesPrimarias extends Aplicacoes {
 		super(codigo, descricao, estimativaDeRisco, estimativaDeRendimento, fatia, valorMinimo);
 		// TODO Auto-generated constructor stub
 	}
+	public double getEstimativaDeRisco() {
+		return estimativaDeRisco;
+	}
+	public double getEstimativaDeRendimento(){
+		return estimativaDeRendimento;
+	}
 
 }
