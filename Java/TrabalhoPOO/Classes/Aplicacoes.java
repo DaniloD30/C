@@ -4,8 +4,8 @@ public abstract class Aplicacoes {
 	
 	private String codigo;
 	private String descricao;
-	private double estimativaDeRisco;
-	private double estimativaDeRendimento;
+	protected double estimativaDeRisco;
+	protected double estimativaDeRendimento;
 	private double fatia;
 	private double valorMinimo;
 	
@@ -20,6 +20,8 @@ public abstract class Aplicacoes {
 		this.fatia = fatia;
 		this.valorMinimo = valorMinimo;
 	}
+	public Aplicacoes(){
+	}
 	public double getValorMinimo() {
 		return valorMinimo;
 	}
@@ -32,15 +34,13 @@ public abstract class Aplicacoes {
 	public void setFatia(float fatia) {
 		this.fatia = fatia;
 	}
-	public double getEstimativaDeRisco() {
-		return estimativaDeRisco;
-	}
+	public abstract double getEstimativaDeRisco() ;
+		
 	public void setEstimativaDeRisco(float r) {
 		this.estimativaDeRisco = r;
 	}
-	public double getEstimativaDeRendimento(){
-		return estimativaDeRendimento;
-	}
+	public abstract double getEstimativaDeRendimento();
+		
 	public void setEstimativaDeRendimento(float r) {
 		this.estimativaDeRendimento = r;
 	}
